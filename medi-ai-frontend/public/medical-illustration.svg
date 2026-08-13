@@ -1,0 +1,280 @@
+<svg
+  width="520"
+  height="410"
+  viewBox="0 0 520 410"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <defs>
+
+    <linearGradient
+      id="shieldGradient"
+      x1="180"
+      y1="50"
+      x2="250"
+      y2="230"
+      gradientUnits="userSpaceOnUse"
+    >
+      <stop stop-color="#3B82F6"/>
+      <stop offset="1" stop-color="#155EEF"/>
+    </linearGradient>
+
+    <linearGradient
+      id="metalGradient"
+      x1="210"
+      y1="270"
+      x2="420"
+      y2="360"
+      gradientUnits="userSpaceOnUse"
+    >
+      <stop stop-color="#E8F1FA"/>
+      <stop offset="0.5" stop-color="#94A9BF"/>
+      <stop offset="1" stop-color="#E9F2FA"/>
+    </linearGradient>
+
+    <filter
+      id="shadow"
+      x="-50%"
+      y="-50%"
+      width="200%"
+      height="200%"
+    >
+      <feDropShadow
+        dx="0"
+        dy="10"
+        stdDeviation="10"
+        flood-color="#2563EB"
+        flood-opacity="0.18"
+      />
+    </filter>
+
+    <filter
+      id="softShadow"
+      x="-50%"
+      y="-50%"
+      width="200%"
+      height="200%"
+    >
+      <feDropShadow
+        dx="0"
+        dy="5"
+        stdDeviation="5"
+        flood-color="#0F172A"
+        flood-opacity="0.15"
+      />
+    </filter>
+
+  </defs>
+
+
+  <!-- Soft background -->
+  <circle
+    cx="230"
+    cy="220"
+    r="150"
+    fill="#EFF6FF"
+  />
+
+  <circle
+    cx="95"
+    cy="300"
+    r="45"
+    fill="#E0EEFF"
+  />
+
+
+  <!-- Small decorative plus -->
+  <path
+    d="M430 95H444"
+    stroke="#BFDBFE"
+    stroke-width="4"
+    stroke-linecap="round"
+  />
+
+  <path
+    d="M437 88V102"
+    stroke="#BFDBFE"
+    stroke-width="4"
+    stroke-linecap="round"
+  />
+
+
+  <!-- Shield -->
+  <g filter="url(#shadow)">
+
+    <path
+      d="
+        M185 42
+        L275 72
+        V139
+        C275 193 239 228 230 233
+        C221 228 185 193 185 139
+        V72
+        L185 42Z
+      "
+      fill="url(#shieldGradient)"
+    />
+
+    <path
+      d="
+        M198 69
+        L230 58
+        L262 69
+        V137
+        C262 174 242 198 230 207
+        C218 198 198 174 198 137
+        V69Z
+      "
+      fill="#2470EA"
+    />
+
+    <!-- Cross -->
+    <rect
+      x="218"
+      y="91"
+      width="24"
+      height="72"
+      rx="4"
+      fill="white"
+    />
+
+    <rect
+      x="194"
+      y="115"
+      width="72"
+      height="24"
+      rx="4"
+      fill="white"
+    />
+
+  </g>
+
+
+  <!-- Stethoscope tube left -->
+  <path
+    d="
+      M172 180
+      C172 246 132 282 88 282
+      C44 282 28 249 28 219
+      C28 190 46 174 66 174
+    "
+    stroke="#163D67"
+    stroke-width="10"
+    stroke-linecap="round"
+    fill="none"
+  />
+
+  <!-- Stethoscope tube right -->
+  <path
+    d="
+      M290 177
+      C290 236 312 270 354 270
+      C395 270 417 238 417 203
+    "
+    stroke="#163D67"
+    stroke-width="10"
+    stroke-linecap="round"
+    fill="none"
+  />
+
+
+  <!-- Left ear tube -->
+  <path
+    d="M166 178C158 158 151 150 137 145"
+    stroke="#183F67"
+    stroke-width="9"
+    stroke-linecap="round"
+  />
+
+  <!-- Right ear tube -->
+  <path
+    d="M291 177C302 158 309 151 322 146"
+    stroke="#183F67"
+    stroke-width="9"
+    stroke-linecap="round"
+  />
+
+
+  <!-- Ear tips -->
+  <rect
+    x="130"
+    y="137"
+    width="20"
+    height="11"
+    rx="5.5"
+    transform="rotate(-26 130 137)"
+    fill="#163D67"
+  />
+
+  <rect
+    x="314"
+    y="137"
+    width="20"
+    height="11"
+    rx="5.5"
+    transform="rotate(26 314 137)"
+    fill="#163D67"
+  />
+
+
+  <!-- Chest piece -->
+  <g filter="url(#softShadow)">
+
+    <circle
+      cx="223"
+      cy="306"
+      r="36"
+      fill="#C7D8E8"
+      stroke="#5B7590"
+      stroke-width="4"
+    />
+
+    <circle
+      cx="223"
+      cy="306"
+      r="25"
+      fill="url(#metalGradient)"
+      stroke="#7E95AB"
+      stroke-width="3"
+    />
+
+    <circle
+      cx="223"
+      cy="306"
+      r="12"
+      fill="#AFC1D2"
+    />
+
+    <path
+      d="M223 270V251"
+      stroke="#6D859C"
+      stroke-width="8"
+      stroke-linecap="round"
+    />
+
+  </g>
+
+
+  <!-- Chest tube -->
+  <path
+    d="
+      M223 251
+      C223 225 204 210 184 201
+    "
+    stroke="#183F67"
+    stroke-width="9"
+    stroke-linecap="round"
+    fill="none"
+  />
+
+
+  <!-- Little shine -->
+  <circle
+    cx="205"
+    cy="289"
+    r="5"
+    fill="white"
+    opacity="0.7"
+  />
+
+</svg>
