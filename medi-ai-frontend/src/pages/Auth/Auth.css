@@ -1,6 +1,6 @@
-/* =========================================================
+/*  
    GLOBAL
-========================================================= */
+  */
 
 * {
   box-sizing: border-box;
@@ -30,9 +30,9 @@ body {
 }
 
 
-/* =========================================================
+/*  
    AUTH PAGE
-========================================================= */
+  */
 
 .auth-page {
   position: relative;
@@ -46,9 +46,9 @@ body {
 }
 
 
-/* =========================================================
+/*  
    BACKGROUND CIRCLE
-========================================================= */
+  */
 
 .auth-bg-circle {
   position: absolute;
@@ -69,9 +69,9 @@ body {
 }
 
 
-/* =========================================================
+/*  
    DOT PATTERN
-========================================================= */
+  */
 
 .auth-dot-pattern {
   position: absolute;
@@ -110,9 +110,9 @@ body {
 }
 
 
-/* =========================================================
+/*  
    MAIN AUTH LAYOUT
-========================================================= */
+  */
 
 .auth-layout {
   position: relative;
@@ -141,9 +141,9 @@ body {
 }
 
 
-/* =========================================================
+/*  
    LEFT SIDE
-========================================================= */
+  */
 
 .auth-left {
   position: relative;
@@ -158,9 +158,9 @@ body {
 }
 
 
-/* =========================================================
+/*  
    LEFT CONTENT
-========================================================= */
+  */
 
 .auth-left-content {
   position: relative;
@@ -195,9 +195,9 @@ body {
 }
 
 
-/* =========================================================
+/*  
    FEATURES
-========================================================= */
+  */
 
 .feature-list {
   position: relative;
@@ -302,9 +302,9 @@ body {
 }
 
 
-/* =========================================================
+/*  
    SVG / IMG
-========================================================= */
+  */
 
 .medical-art img,
 .medical-art svg {
@@ -336,9 +336,9 @@ body {
 }
 
 
-/* =========================================================
+/*  
    PRIVACY BADGE
-========================================================= */
+  */
 
 .privacy-badge {
   position: absolute !important;
@@ -389,9 +389,9 @@ body {
 }
 
 
-/* =========================================================
+/*  
    AUTH CARD
-========================================================= */
+  */
 
 .auth-card {
   position: relative;
@@ -416,9 +416,9 @@ body {
 }
 
 
-/* =========================================================
+/*  
    CARD HEADER
-========================================================= */
+  */
 
 .auth-card-heading {
   text-align: center;
@@ -449,9 +449,9 @@ body {
 }
 
 
-/* =========================================================
+/*  
    TABS
-========================================================= */
+  */
 
 .auth-tabs {
   display: grid;
@@ -508,9 +508,9 @@ body {
 }
 
 
-/* =========================================================
+/*  
    FORM
-========================================================= */
+  */
 
 .auth-form {
   margin-top: 19px;
@@ -535,9 +535,9 @@ body {
 }
 
 
-/* =========================================================
+/*  
    INPUT
-========================================================= */
+  */
 
 .input-box {
   position: relative;
@@ -601,9 +601,9 @@ body {
 }
 
 
-/* =========================================================
+/*  
    PASSWORD BUTTON
-========================================================= */
+  */
 
 .password-button {
   position: absolute;
@@ -638,9 +638,9 @@ body {
 }
 
 
-/* =========================================================
+/*  
    LOGIN OPTIONS
-========================================================= */
+  */
 
 .form-options {
   display: flex;
@@ -691,9 +691,9 @@ body {
 }
 
 
-/* =========================================================
+/*  
    PRIMARY BUTTON
-========================================================= */
+  */
 
 .primary-button {
   position: relative;
@@ -756,9 +756,9 @@ body {
 }
 
 
-/* =========================================================
+/*  
    DIVIDER
-========================================================= */
+  */
 
 .divider {
   display: flex;
@@ -789,9 +789,9 @@ body {
 }
 
 
-/* =========================================================
+/*  
    SOCIAL LOGIN
-========================================================= */
+  */
 
 .social-login {
   display: grid;
@@ -860,9 +860,9 @@ body {
 }
 
 
-/* =========================================================
+/*  
    TERMS
-========================================================= */
+  */
 
 .terms-text {
   max-width: 350px;
@@ -891,9 +891,9 @@ body {
 }
 
 
-/* =========================================================
+/*  
    REGISTER
-========================================================= */
+  */
 
 .register-card {
   align-self: flex-start;
@@ -910,9 +910,9 @@ body {
 }
 
 
-/* =========================================================
+/*  
    REGISTER TERMS
-========================================================= */
+  */
 
 .register-terms {
   display: flex;
@@ -956,9 +956,9 @@ body {
 }
 
 
-/* =========================================================
+/*  
    LARGE DESKTOP
-========================================================= */
+  */
 
 @media (min-width: 1400px) {
 
@@ -1011,9 +1011,9 @@ body {
 }
 
 
-/* =========================================================
+/*  
    LAPTOP
-========================================================= */
+  */
 
 @media (max-width: 1100px) and (min-width: 851px) {
 
@@ -1057,9 +1057,9 @@ body {
 }
 
 
-/* =========================================================
+/*  
    TABLET
-========================================================= */
+  */
 
 @media (max-width: 850px) {
 
@@ -1147,9 +1147,9 @@ body {
 }
 
 
-/* =========================================================
+/*  
    MOBILE
-========================================================= */
+  */
 
 @media (max-width: 550px) {
 
@@ -1272,9 +1272,9 @@ body {
 }
 
 
-/* =========================================================
+/*  
    SMALL MOBILE
-========================================================= */
+  */
 
 @media (max-width: 380px) {
 
@@ -1326,9 +1326,9 @@ body {
 }
 
 
-/* =========================================================
+/*  
    VERY SMALL MOBILE
-========================================================= */
+  */
 
 @media (max-width: 320px) {
 
@@ -1401,4 +1401,318 @@ body {
 
 .terms-error {
   margin-top: 6px;
+}
+
+
+@media (min-width: 1400px) {
+    .auth-layout {
+        width: min(1320px, 90%);
+        grid-template-columns: minmax(0, 1fr) 500px;
+        column-gap: 100px;
+        padding-top: 70px;
+        min-height: 720px;
+    }
+
+    .auth-left {
+        min-height: 720px;
+    }
+
+    .auth-left h1 {
+        font-size: 31px;
+    }
+
+    .auth-subtitle {
+        font-size: 15px;
+    }
+
+    .medical-art {
+        top: 350px !important;
+        width: 340px !important;
+        height: 270px !important;
+        transform: translateY(0) !important;
+    }
+
+    .privacy-badge {
+        top: 720px !important;
+    }
+
+    .auth-card {
+        padding: 32px 28px;
+    }
+
+    .register-card {
+        padding-top: 32px;
+    }
+}
+
+@media (max-width: 1100px) and (min-width: 851px) {
+    .auth-layout {
+        width: 92%;
+        grid-template-columns: minmax(0, 1fr) 440px;
+        column-gap: 55px;
+        padding-top: 65px;
+        min-height: 680px;
+    }
+
+    .auth-left {
+        min-height: 680px;
+    }
+
+    .auth-bg-circle {
+        right: -30px;
+        width: 520px;
+        height: 520px;
+    }
+
+    .medical-art {
+        top: 430px !important;
+        width: 290px !important;
+        height: 230px !important;
+        transform: translateY(0) !important;
+    }
+
+    .privacy-badge {
+        top: 665px !important;
+    }
+}
+
+@media (max-width: 850px) {
+    .auth-page {
+        min-height: 100vh;
+        overflow-x: hidden;
+        overflow-y: auto;
+    }
+
+    .auth-layout {
+        width: min(500px, calc(100% - 36px));
+        min-height: auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 24px;
+        padding: 35px 0;
+        transform: none;
+    }
+
+    .auth-left {
+        width: 100%;
+        min-height: auto;
+        padding: 0;
+        text-align: center;
+    }
+
+    .auth-left-content {
+        width: 100%;
+        padding: 0;
+    }
+
+    .auth-left h1 {
+        font-size: 26px;
+    }
+
+    .auth-subtitle {
+        font-size: 13px;
+    }
+
+    .feature-list,
+    .medical-art,
+    .privacy-badge {
+        display: none !important;
+    }
+
+    .auth-card {
+        width: 100%;
+        align-self: flex-start;
+        padding: 29px 25px;
+    }
+
+    .auth-bg-circle {
+        width: 460px;
+        height: 460px;
+        top: 150px;
+        right: -190px;
+    }
+
+    .auth-dot-middle {
+        display: none;
+    }
+}
+
+@media (max-width: 550px) {
+    .auth-layout {
+        width: calc(100% - 28px);
+        gap: 18px;
+        padding: 22px 0 30px;
+    }
+
+    .auth-left h1 {
+        font-size: 23px;
+        letter-spacing: -0.3px;
+    }
+
+    .auth-subtitle {
+        margin-top: 8px;
+        font-size: 12px;
+        line-height: 1.6;
+    }
+
+    .auth-card {
+        width: 100%;
+        padding: 24px 19px;
+        border-radius: 15px;
+    }
+
+    .register-card {
+        padding-top: 24px;
+    }
+
+    .auth-card-heading h2 {
+        font-size: 19px;
+    }
+
+    .auth-card-heading p {
+        font-size: 11px;
+    }
+
+    .auth-tabs {
+        margin-top: 18px;
+    }
+
+    .auth-tab {
+        height: 36px;
+        font-size: 11px;
+    }
+
+    .form-field {
+        margin-bottom: 13px;
+    }
+
+    .form-field label {
+        font-size: 10px;
+    }
+
+    .input-box input {
+        height: 40px;
+        font-size: 10px;
+    }
+
+    .form-options {
+        margin-bottom: 17px;
+    }
+
+    .remember,
+    .forgot-password {
+        font-size: 9px;
+    }
+
+    .primary-button {
+        height: 40px;
+        font-size: 10px;
+    }
+
+    .divider {
+        margin: 17px 0 13px;
+    }
+
+    .divider p {
+        font-size: 9px;
+    }
+
+    .social-button {
+        height: 38px;
+        font-size: 10px;
+    }
+
+    .terms-text {
+        font-size: 8px;
+    }
+
+    .register-terms {
+        font-size: 9px;
+    }
+
+    .auth-dot-top {
+        top: 5px;
+        right: -3px;
+        transform: scale(0.7);
+    }
+
+    .auth-dot-bottom {
+        display: none;
+    }
+}
+
+@media (max-width: 380px) {
+    .auth-layout {
+        width: calc(100% - 18px);
+        padding-top: 16px;
+    }
+
+    .auth-left h1 {
+        font-size: 21px;
+    }
+
+    .auth-subtitle {
+        font-size: 11px;
+    }
+
+    .auth-card {
+        padding: 21px 15px;
+    }
+
+    .register-card {
+        padding-top: 21px;
+    }
+
+    .auth-card-heading h2 {
+        font-size: 18px;
+    }
+
+    .form-options {
+        gap: 8px;
+    }
+
+    .forgot-password {
+        white-space: nowrap;
+    }
+
+    .social-login {
+        grid-template-columns: 1fr;
+    }
+
+    .social-button {
+        height: 37px;
+    }
+
+    .register-terms {
+        font-size: 9px;
+    }
+}
+
+@media (max-width: 320px) {
+    .auth-layout {
+        width: calc(100% - 12px);
+        padding-top: 12px;
+    }
+
+    .auth-card {
+        padding-left: 13px;
+        padding-right: 13px;
+    }
+
+    .auth-left h1 {
+        font-size: 20px;
+    }
+
+    .auth-card-heading h2 {
+        font-size: 17px;
+    }
+
+    .input-box input {
+        height: 38px;
+    }
+
+    .primary-button {
+        height: 39px;
+    }
 }

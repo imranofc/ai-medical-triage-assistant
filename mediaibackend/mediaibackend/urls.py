@@ -7,4 +7,9 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/login/', TokenObtainPairView.as_view(), name="login"),
     path('api/register/', RegisterView.as_view(), name="register"),
+    path('api/consultation/', ConsultationView.as_view(), name="consultation"),
+    path('api/new-consultation/', new_consultation, name="new_consultation"),
+    path('api/petientdetail/', PetientDetailView.as_view(), name="patientdetail"),
+    path('api/consultation-review/', consultation_review, name="consultation_review"),
+    path('api/analysis/', AnalysisView.as_view(), name="analysis"),
 ]

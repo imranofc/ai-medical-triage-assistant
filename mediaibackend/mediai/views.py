@@ -1,13 +1,37 @@
+from django.conf import settings
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import status
+from rest_framework.permissions import IsAuthenticated
+from rest_framework_simplejwt.authentication import JWTAuthentication
+from rest_framework.decorators import (
+    authentication_classes,
+    permission_classes,
+    api_view
+)
 
-from .serializers import RegisterSerializer
+from .models import (
+    Consultation,
+    PatientDetail,
+    Analysis
+)
+
+from .serializers import (
+    RegisterSerializer,
+    ConsultationSerializer,
+    PatientDetailSerializer,
+    AnalysisSerializer
+)
+
+from .ai.service import generate_analysis
 
 
 class RegisterView(APIView):
+
     def post(self, request):
-        serializer = RegisterSerializer(data=request.data)
+        serializer = RegisterSerializer(
+            data=request.data
+        )
 
         if serializer.is_valid():
             serializer.save()
@@ -24,3 +48,398 @@ class RegisterView(APIView):
             serializer.errors,
             status=status.HTTP_400_BAD_REQUEST
         )
+
+
+class ConsultationView(APIView):
+
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        consultation_id = request.query_params.get("id")
+
+        if not consultation_id:
+            return Response(
+                {
+                    "detail": "Consultation ID is required."
+                },
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        consultation = Consultation.objects.filter(
+            id=consultation_id,
+            user=request.user
+        ).first()
+
+        if consultation is None:
+            return Response(
+                {
+                    "detail": "Consultation not found."
+                },
+                status=status.HTTP_404_NOT_FOUND
+            )
+
+        return Response(
+            {
+                "id": consultation.id,
+                "symptoms": list(
+                    consultation.symptoms.values_list(
+                        "symptom",
+                        flat=True
+                    )
+                ),
+                "duration": consultation.duration,
+                "severity": consultation.severity,
+                "description": consultation.description,
+            },
+            status=status.HTTP_200_OK
+        )
+
+    def post(self, request):
+        consultation_id = request.query_params.get("id")
+
+        serializer = ConsultationSerializer(
+            data=request.data,
+            context={
+                "request": request,
+                "consultation_id": consultation_id
+            }
+        )
+
+        if serializer.is_valid():
+            consultation = serializer.save(
+                user=request.user
+            )
+
+            return Response(
+                {
+                    "id": consultation.id
+                },
+                status=status.HTTP_200_OK
+            )
+
+        return Response(
+            serializer.errors,
+            status=status.HTTP_400_BAD_REQUEST
+        )
+
+
+@api_view(["GET"])
+@permission_classes([IsAuthenticated])
+@authentication_classes([JWTAuthentication])
+def new_consultation(request):
+
+    consultation_id = request.query_params.get("id")
+
+    if not consultation_id:
+        return Response(
+            {
+                "error": "Consultation ID is required."
+            },
+            status=status.HTTP_400_BAD_REQUEST
+        )
+
+    consultation = Consultation.objects.filter(
+        id=consultation_id
+    ).first()
+
+    if consultation is None:
+        return Response(
+            {
+                "detail": "Consultation not found."
+            },
+            status=status.HTTP_404_NOT_FOUND
+        )
+
+    if consultation.user != request.user:
+        return Response(
+            {
+                "detail": (
+                    "You do not have access "
+                    "to this consultation."
+                )
+            },
+            status=status.HTTP_403_FORBIDDEN
+        )
+
+    patient_detail = PatientDetail.objects.filter(
+        consultation=consultation
+    ).last()
+
+    if patient_detail is None:
+        return Response(
+            {},
+            status=status.HTTP_200_OK
+        )
+
+    return Response(
+        {
+            "age": patient_detail.age,
+            "gender": patient_detail.gender,
+            "height": str(patient_detail.height),
+            "weight": str(patient_detail.weight),
+            "medical_conditions": (
+                patient_detail.medical_conditions
+            ),
+            "smoke": patient_detail.smoke,
+            "drink_alcohol": (
+                patient_detail.drink_alcohol
+            ),
+            "diet": patient_detail.diet,
+            "exercise": patient_detail.exercise,
+            "allergies": patient_detail.allergies,
+        },
+        status=status.HTTP_200_OK
+    )
+
+
+@api_view(["GET"])
+@permission_classes([IsAuthenticated])
+@authentication_classes([JWTAuthentication])
+def consultation_review(request):
+
+    consultation_id = request.query_params.get("id")
+
+    if not consultation_id:
+        return Response(
+            {
+                "detail": "Consultation ID is required."
+            },
+            status=status.HTTP_400_BAD_REQUEST
+        )
+
+    patient_detail = PatientDetail.objects.filter(
+        id=consultation_id
+    ).first()
+
+    if patient_detail is None:
+        return Response(
+            {
+                "detail": "Patient detail not found."
+            },
+            status=status.HTTP_404_NOT_FOUND
+        )
+
+    if patient_detail.consultation.user != request.user:
+        return Response(
+            {
+                "detail": (
+                    "You do not have access "
+                    "to this consultation."
+                )
+            },
+            status=status.HTTP_403_FORBIDDEN
+        )
+
+    serializer = PatientDetailSerializer(
+        patient_detail
+    )
+
+    return Response(
+        serializer.data,
+        status=status.HTTP_200_OK
+    )
+
+
+class PetientDetailView(APIView):
+
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+
+        serializer = PatientDetailSerializer(
+            data=request.data
+        )
+
+        if serializer.is_valid():
+            patient_detail = serializer.save()
+
+            return Response(
+                {
+                    "id": patient_detail.id
+                },
+                status=status.HTTP_201_CREATED
+            )
+
+        return Response(
+            serializer.errors,
+            status=status.HTTP_400_BAD_REQUEST
+        )
+
+
+class AnalysisView(APIView):
+
+    authentication_classes = [
+        JWTAuthentication
+    ]
+
+    permission_classes = [
+        IsAuthenticated
+    ]
+
+    def get_consultation(
+        self,
+        request,
+        consultation_id
+    ):
+        return Consultation.objects.filter(
+            id=consultation_id,
+            user=request.user
+        ).first()
+
+    def get(self, request):
+
+        consultation_id = request.query_params.get(
+            "id"
+        )
+
+        if not consultation_id:
+            return Response(
+                {
+                    "detail": (
+                        "Consultation ID is required."
+                    )
+                },
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        consultation = self.get_consultation(
+            request,
+            consultation_id
+        )
+
+        if consultation is None:
+            return Response(
+                {
+                    "detail": "Consultation not found."
+                },
+                status=status.HTTP_404_NOT_FOUND
+            )
+
+        analysis = Analysis.objects.filter(
+            consultation=consultation
+        ).first()
+
+        if analysis is None:
+            return Response(
+                {
+                    "detail": "Analysis not found.",
+                    "analysis_exists": False
+                },
+                status=status.HTTP_404_NOT_FOUND
+            )
+
+        serializer = AnalysisSerializer(
+            analysis
+        )
+
+        return Response(
+            serializer.data,
+            status=status.HTTP_200_OK
+        )
+
+    def post(self, request):
+
+        consultation_id = request.query_params.get(
+            "id"
+        )
+
+        if not consultation_id:
+            return Response(
+                {
+                    "detail": (
+                        "Consultation ID is required."
+                    )
+                },
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        consultation = self.get_consultation(
+            request,
+            consultation_id
+        )
+
+        if consultation is None:
+            return Response(
+                {
+                    "detail": "Consultation not found."
+                },
+                status=status.HTTP_404_NOT_FOUND
+            )
+
+        patient_detail = PatientDetail.objects.filter(
+            consultation=consultation
+        ).last()
+
+        if patient_detail is None:
+            return Response(
+                {
+                    "detail": (
+                        "Patient details are required "
+                        "before analysis."
+                    )
+                },
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        if not consultation.symptoms.exists():
+            return Response(
+                {
+                    "detail": (
+                        "At least one symptom is required "
+                        "before analysis."
+                    )
+                },
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        try:
+            analysis_data = generate_analysis(
+                consultation,
+                patient_detail
+            )
+
+            analysis, created = (
+                Analysis.objects.update_or_create(
+                    consultation=consultation,
+                    defaults={
+                        "response": analysis_data
+                    }
+                )
+            )
+
+            consultation.draft = False
+
+            consultation.save(
+                update_fields=["draft"]
+            )
+
+            serializer = AnalysisSerializer(
+                analysis
+            )
+
+            return Response(
+                {
+                    "message": (
+                        "AI analysis generated "
+                        "successfully."
+                    ),
+                    "analysis_exists": True,
+                    "created": created,
+                    "data": serializer.data
+                },
+                status=status.HTTP_200_OK
+            )
+
+        except Exception as e:
+            return Response(
+                {
+                    "detail": (
+                        "Failed to generate "
+                        "AI analysis."
+                    ),
+                    "error": str(e)
+                },
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )

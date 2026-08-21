@@ -1,0 +1,934 @@
+/* Self Care Details Page
+    */
+
+.self-care-details-page {
+    width: 100%;
+    min-height: 100vh;
+    background: #f8fafd;
+    box-sizing: border-box;
+    font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+    color: #17233c;
+}
+
+.self-care-details-page *,
+.self-care-details-page *::before,
+.self-care-details-page *::after {
+    box-sizing: border-box;
+}
+
+.self-care-details-page button {
+    font-family: inherit;
+}
+
+/* Main Layout
+    */
+
+.self-care-details-main {
+    width: calc(100% - 300px);
+    min-width: 0;
+    min-height: calc(100vh - 76px);
+    margin-left: 300px;
+    padding: 20px;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 320px;
+    gap: 20px;
+    align-items: start;
+}
+
+.self-care-details-content {
+    width: 100%;
+    min-width: 0;
+}
+
+.self-care-sidebar {
+    width: 100%;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    align-self: start;
+}
+
+/* Main Card
+    */
+
+.self-care-main-card {
+    width: 100%;
+    padding: 20px;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+}
+
+/* Header
+    */
+
+.self-care-header {
+    width: 100%;
+    margin-bottom: 25px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.self-care-title-box {
+    min-width: 0;
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+}
+
+.self-care-title-box > div {
+    min-width: 0;
+}
+
+.self-care-title-back {
+    width: 38px;
+    height: 38px;
+    min-width: 38px;
+    margin: 0;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #dce6f2;
+    border-radius: 8px;
+    background: #ffffff;
+    color: #17233c;
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    line-height: 1;
+}
+
+.self-care-title-back svg {
+    width: 16px;
+    height: 16px;
+    display: block;
+}
+
+.self-care-title-back:hover {
+    background: #f1f6ff;
+    border-color: #1769ff;
+    color: #1769ff;
+}
+
+.self-care-title-box h2 {
+    margin: 0 0 5px;
+    padding: 0;
+    color: #17233c;
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 1.3;
+    letter-spacing: -0.2px;
+}
+
+.self-care-title-box p {
+    margin: 0;
+    padding: 0;
+    color: #526b8e;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.55;
+}
+
+/* Secure Badge
+    */
+
+.self-care-secure {
+    flex-shrink: 0;
+    padding: 10px 13px;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    border: 1px solid #d6e5ff;
+    border-radius: 33px;
+    background: #f1f6ff;
+    color: #1769ff;
+    white-space: nowrap;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.self-care-secure svg {
+    width: 16px;
+    height: 16px;
+}
+
+/* Information Banner
+    */
+
+.self-care-info-banner {
+    width: 100%;
+    margin-bottom: 25px;
+    padding: 16px;
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+    border: 1px solid #d6e5ff;
+    border-radius: 12px;
+    background: #f5f9ff;
+}
+
+.self-care-info-icon {
+    width: 44px;
+    height: 44px;
+    min-width: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: #e8f1ff;
+    color: #1769ff;
+}
+
+.self-care-info-icon svg {
+    width: 17px;
+    height: 17px;
+}
+
+.self-care-info-banner h4 {
+    margin: 0 0 5px;
+    color: #17233c;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 1.4;
+}
+
+.self-care-info-banner p {
+    margin: 0;
+    color: #526b8e;
+    font-size: 14px;
+    line-height: 1.55;
+}
+
+/* Self Care List
+    */
+
+.self-care-list {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+/* Self Care Card
+    */
+
+.self-care-card {
+    width: 100%;
+    overflow: hidden;
+    border: 1px solid #dce6f2;
+    border-radius: 12px;
+    background: #ffffff;
+}
+
+.self-care-card.open {
+    border-color: #b9d0f7;
+}
+
+.self-care-card-header {
+    width: 100%;
+    min-height: 82px;
+    padding: 14px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    border: 0;
+    background: #ffffff;
+    color: inherit;
+    cursor: pointer;
+    text-align: left;
+}
+
+.self-care-card-header:hover {
+    background: #fbfdff;
+}
+
+.self-care-card-title {
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.self-care-card-title > div:last-child {
+    min-width: 0;
+}
+
+.self-care-item-icon {
+    width: 48px;
+    height: 48px;
+    min-width: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    background: #eef4ff;
+    color: #1769ff;
+}
+
+.self-care-item-icon svg {
+    width: 18px;
+    height: 18px;
+}
+
+.self-care-card-title span {
+    display: block;
+    margin-bottom: 4px;
+    color: #7890ad;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 1.4;
+}
+
+.self-care-card-title h3 {
+    margin: 0;
+    color: #17233c;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 1.45;
+    overflow-wrap: anywhere;
+}
+
+.self-care-toggle {
+    width: 38px;
+    height: 38px;
+    min-width: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: #f1f5fa;
+    color: #587495;
+}
+
+.self-care-toggle svg {
+    width: 15px;
+    height: 15px;
+}
+
+.self-care-card.open .self-care-toggle {
+    background: #eef4ff;
+    color: #1769ff;
+}
+
+/* Self Care Card Body
+    */
+
+.self-care-card-body {
+    width: 100%;
+    padding: 0 16px 18px;
+    border-top: 1px solid #e8eef5;
+}
+
+.self-care-section {
+    padding: 16px 0;
+    border-bottom: 1px solid #e5ebf3;
+}
+
+.self-care-section:last-child {
+    border-bottom: 0;
+}
+
+.self-care-section h4 {
+    margin: 0 0 9px;
+    color: #38577a;
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1.4;
+}
+
+.self-care-section-content {
+    color: #526b8e;
+    font-size: 14px;
+    line-height: 1.65;
+}
+
+.self-care-simple-text {
+    margin: 17px 0;
+    color: #526b8e;
+    font-size: 14px;
+    line-height: 1.65;
+}
+
+/* Lists / Nested Data
+    */
+
+.self-care-value-list {
+    margin: 0;
+    padding-left: 20px;
+    color: #526b8e;
+    font-size: 14px;
+}
+
+.self-care-value-list li {
+    margin-bottom: 7px;
+    line-height: 1.6;
+}
+
+.self-care-value-list li:last-child {
+    margin-bottom: 0;
+}
+
+.self-care-nested-object {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.self-care-nested-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+.self-care-nested-item strong {
+    min-width: 130px;
+    color: #38577a;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.self-care-nested-item span {
+    flex: 1;
+    min-width: 0;
+    color: #526b8e;
+    font-size: 13px;
+    line-height: 1.6;
+    overflow-wrap: anywhere;
+}
+
+/* Note
+    */
+
+.self-care-note {
+    width: 100%;
+    margin-top: 15px;
+    padding: 12px 14px;
+    display: flex;
+    align-items: flex-start;
+    gap: 9px;
+    border-radius: 9px;
+    background: #f5f8fc;
+    color: #607897;
+    font-size: 13px;
+    line-height: 1.55;
+}
+
+.self-care-note svg {
+    width: 14px;
+    height: 14px;
+    flex-shrink: 0;
+    margin-top: 3px;
+}
+
+/* Important Box
+    */
+
+.self-care-important-box {
+    width: 100%;
+    margin-top: 24px;
+    padding: 16px;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    border: 1px solid #ffd0c2;
+    border-radius: 12px;
+    background: #fff8f5;
+}
+
+.self-care-important-icon {
+    width: 40px;
+    height: 40px;
+    min-width: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    background: #ffebe4;
+    color: #ed6a3d;
+}
+
+.self-care-important-icon svg {
+    width: 17px;
+    height: 17px;
+}
+
+.self-care-important-box h4 {
+    margin: 0 0 5px;
+    color: #17233c;
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.self-care-important-box p {
+    margin: 0;
+    color: #526b8e;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+/* Actions
+    */
+
+.self-care-actions {
+    width: 100%;
+    margin-top: 24px;
+    padding-top: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    border-top: 1px solid #e2e8f0;
+}
+
+.self-care-back-btn {
+    padding: 10px 16px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    border: 1px solid #1769ff;
+    border-radius: 8px;
+    background: #ffffff;
+    color: #1769ff;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.self-care-back-btn svg {
+    width: 14px;
+    height: 14px;
+}
+
+.self-care-back-btn:hover {
+    background: #1769ff;
+    color: #ffffff;
+}
+
+.self-care-action-note {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #7890ad;
+    font-size: 12px;
+}
+
+.self-care-action-note svg {
+    width: 14px;
+    height: 14px;
+}
+
+/* Sidebar
+    */
+
+.self-care-side-card {
+    width: 100%;
+    padding: 22px;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    background: #ffffff;
+}
+
+.self-care-side-icon {
+    width: 48px;
+    height: 48px;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    background: #eef4ff;
+    color: #1769ff;
+}
+
+.self-care-side-icon svg {
+    width: 18px;
+    height: 18px;
+}
+
+.self-care-side-card h3 {
+    margin: 0 0 9px;
+    color: #17233c;
+    font-size: 17px;
+    font-weight: 700;
+    line-height: 1.4;
+}
+
+.self-care-side-card > p {
+    margin: 0 0 18px;
+    color: #526b8e;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.self-care-side-point {
+    margin-top: 13px;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+.self-care-side-point svg {
+    width: 15px;
+    height: 15px;
+    flex-shrink: 0;
+    margin-top: 3px;
+    color: #1fa45b;
+}
+
+.self-care-side-point span {
+    color: #526b8e;
+    font-size: 13px;
+    line-height: 1.55;
+}
+
+/* Sidebar Warning
+    */
+
+.self-care-side-warning {
+    width: 100%;
+    padding: 18px;
+    border: 1px solid #ffd0c2;
+    border-radius: 12px;
+    background: #fff8f5;
+}
+
+.self-care-side-warning-title {
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.self-care-side-warning-title svg {
+    width: 16px;
+    height: 16px;
+    color: #ed6a3d;
+}
+
+.self-care-side-warning-title h3 {
+    margin: 0;
+    color: #17233c;
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.self-care-side-warning p {
+    margin: 0;
+    color: #526b8e;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+/* Loading / Empty / Error
+    */
+
+.self-care-loading,
+.self-care-empty,
+.self-care-error {
+    min-height: 400px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.self-care-loader {
+    width: 38px;
+    height: 38px;
+    margin-bottom: 18px;
+    border: 4px solid #e4edfb;
+    border-top-color: #1769ff;
+    border-radius: 50%;
+    animation: self-care-spin 0.8s linear infinite;
+}
+
+@keyframes self-care-spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.self-care-loading h3,
+.self-care-empty h3,
+.self-care-error h3 {
+    margin: 0 0 7px;
+    color: #17233c;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.self-care-loading p,
+.self-care-empty p,
+.self-care-error p {
+    margin: 0 0 18px;
+    color: #6a809d;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.self-care-empty > svg {
+    width: 30px;
+    height: 30px;
+    margin-bottom: 16px;
+    color: #1769ff;
+}
+
+.self-care-error-icon {
+    width: 58px;
+    height: 58px;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: #fff0e9;
+    color: #ed6a3d;
+}
+
+.self-care-error-icon svg {
+    width: 20px;
+    height: 20px;
+}
+
+/* Desktop Vertical Position
+   Same as Warning / Analysis Details
+    */
+
+.self-care-details-page {
+    position: relative;
+    min-height: 100vh;
+}
+
+@media (min-width: 801px) {
+    .self-care-details-page > .self-care-details-main {
+        position: relative;
+        z-index: 1;
+        margin-top: -614px;
+    }
+}
+
+/* Large Desktop
+    */
+
+@media (min-width: 1200px) {
+    .self-care-details-page > .self-care-details-main {
+        margin-top: -614px;
+    }
+}
+
+/* Medium Desktop
+    */
+
+@media (min-width: 801px) and (max-width: 1199px) {
+    .self-care-details-page > .self-care-details-main {
+        margin-top: -614px;
+    }
+}
+
+/* Tablet
+    */
+
+@media (max-width: 1100px) {
+    .self-care-details-main {
+        width: calc(100% - 240px);
+        margin-left: 240px;
+        padding: 18px;
+        grid-template-columns: minmax(0, 1fr) 280px;
+        gap: 15px;
+    }
+
+    .self-care-main-card {
+        padding: 18px;
+    }
+
+    .self-care-title-box h2 {
+        font-size: 22px;
+    }
+
+    .self-care-side-card {
+        padding: 18px;
+    }
+}
+
+@media (max-width: 900px) {
+    .self-care-details-main {
+        grid-template-columns: 1fr;
+    }
+
+    .self-care-sidebar {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+/* Mobile
+    */
+
+@media (max-width: 800px) {
+    .self-care-details-main {
+        width: 100%;
+        margin-left: 0;
+        padding: 15px;
+        display: block;
+    }
+
+    .self-care-details-page > .self-care-details-main {
+        margin-top: 0;
+        position: relative;
+    }
+
+    .self-care-sidebar {
+        display: flex;
+        margin-top: 15px;
+    }
+
+    .self-care-header {
+        flex-direction: column;
+        gap: 14px;
+    }
+
+    .self-care-secure {
+        align-self: flex-start;
+    }
+
+    .self-care-title-box h2 {
+        font-size: 21px;
+    }
+
+    .self-care-title-box p {
+        font-size: 13px;
+    }
+
+    .self-care-card-header {
+        min-height: 72px;
+        padding: 12px;
+    }
+
+    .self-care-card-title {
+        gap: 10px;
+    }
+
+    .self-care-item-icon {
+        width: 40px;
+        height: 40px;
+        min-width: 40px;
+    }
+
+    .self-care-card-title h3 {
+        font-size: 14px;
+    }
+
+    .self-care-card-body {
+        padding: 0 12px 15px;
+    }
+
+    .self-care-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .self-care-back-btn {
+        width: 100%;
+    }
+
+    .self-care-action-note {
+        justify-content: center;
+    }
+}
+
+/* Small Mobile
+    */
+
+@media (max-width: 500px) {
+    .self-care-details-main {
+        padding: 10px;
+    }
+
+    .self-care-main-card {
+        padding: 13px;
+        border-radius: 10px;
+    }
+
+    .self-care-title-box {
+        gap: 10px;
+    }
+
+    .self-care-title-back {
+        width: 34px;
+        height: 34px;
+        min-width: 34px;
+    }
+
+    .self-care-title-back svg {
+        width: 15px;
+        height: 15px;
+    }
+
+    .self-care-title-box h2 {
+        font-size: 19px;
+    }
+
+    .self-care-title-box p {
+        font-size: 12px;
+    }
+
+    .self-care-info-banner {
+        gap: 10px;
+        padding: 13px;
+    }
+
+    .self-care-info-icon {
+        width: 38px;
+        height: 38px;
+        min-width: 38px;
+    }
+
+    .self-care-info-banner h4 {
+        font-size: 14px;
+    }
+
+    .self-care-info-banner p {
+        font-size: 12px;
+    }
+
+    .self-care-card-title h3 {
+        font-size: 13px;
+    }
+
+    .self-care-item-icon {
+        width: 36px;
+        height: 36px;
+        min-width: 36px;
+        border-radius: 9px;
+    }
+
+    .self-care-toggle {
+        width: 32px;
+        height: 32px;
+        min-width: 32px;
+    }
+
+    .self-care-nested-item {
+        flex-direction: column;
+        gap: 3px;
+    }
+
+    .self-care-nested-item strong {
+        min-width: 0;
+    }
+
+    .self-care-side-card {
+        padding: 16px;
+    }
+}
