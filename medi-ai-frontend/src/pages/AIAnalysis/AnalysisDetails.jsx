@@ -4,14 +4,12 @@ import {
     faArrowLeftLong,
     faShieldHalved,
     faFileMedical,
-    faCircleCheck,
     faTriangleExclamation,
     faCircleInfo,
     faStethoscope,
     faChevronDown,
     faChevronUp
 } from "@fortawesome/free-solid-svg-icons";
-import DashboardNavbar from "../../components/DashboardNavbar/DashboardNavbar.jsx";
 import "./AnalysisDetails.css";
 
 function AnalysisDetails() {
@@ -178,7 +176,7 @@ function AnalysisDetails() {
     if (loading) {
         return (
             <div className="analysis-details-page">
-                <DashboardNavbar />
+
 
                 <main className="analysis-details-main">
                     <div className="analysis-details-content">
@@ -205,7 +203,6 @@ function AnalysisDetails() {
     if (error) {
         return (
             <div className="analysis-details-page">
-                <DashboardNavbar />
 
                 <main className="analysis-details-main">
                     <div className="analysis-details-content">
@@ -246,7 +243,6 @@ function AnalysisDetails() {
 
     return (
         <div className="analysis-details-page">
-            <DashboardNavbar />
 
             <main className="analysis-details-main">
                 <div className="analysis-details-content">
@@ -556,79 +552,6 @@ function AnalysisDetails() {
                     </div>
                 </div>
 
-                <aside className="analysis-details-sidebar">
-                    <div className="details-side-card">
-                        <div className="details-side-icon">
-                            <FontAwesomeIcon
-                                icon={faFileMedical}
-                            />
-                        </div>
-
-                        <h3>
-                            Understanding your results
-                        </h3>
-
-                        <p>
-                            The explanations shown here
-                            are possible causes that may
-                            relate to the symptoms you
-                            described.
-                        </p>
-
-                        <div className="details-side-point">
-                            <FontAwesomeIcon
-                                icon={faCircleCheck}
-                            />
-
-                            <span>
-                                They are not a confirmed
-                                diagnosis.
-                            </span>
-                        </div>
-
-                        <div className="details-side-point">
-                            <FontAwesomeIcon
-                                icon={faCircleCheck}
-                            />
-
-                            <span>
-                                Your symptoms and history
-                                should be considered together.
-                            </span>
-                        </div>
-
-                        <div className="details-side-point">
-                            <FontAwesomeIcon
-                                icon={faCircleCheck}
-                            />
-
-                            <span>
-                                A healthcare professional can
-                                provide a proper diagnosis.
-                            </span>
-                        </div>
-                    </div>
-
-                    <div className="details-side-warning">
-                        <div className="details-side-warning-title">
-                            <FontAwesomeIcon
-                                icon={
-                                    faTriangleExclamation
-                                }
-                            />
-
-                            <h3>
-                                Important
-                            </h3>
-                        </div>
-
-                        <p>
-                            Do not use this page as a
-                            substitute for professional
-                            medical advice.
-                        </p>
-                    </div>
-                </aside>
             </main>
         </div>
     );

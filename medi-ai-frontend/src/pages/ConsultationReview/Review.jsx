@@ -1,6 +1,4 @@
 import checkAccessForReviewPage from "../../utils/checkAccessForReviewPage.js";
-import DashboardNavbar from "../../components/DashboardNavbar/DashboardNavbar.jsx";
-import WhatHappensNext from "../../components/WhatHappensNext/WhatHappensNext.jsx";
 import "./Review.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -39,8 +37,6 @@ function Review() {
         loadData();
     }, []);
 
-    const urlParams = new URLSearchParams(window.location.search);
-    const patientDetailId = urlParams.get("id");
 
     const formatValue = (value) => {
         if (!value) {
@@ -55,7 +51,6 @@ function Review() {
     if (loading) {
         return (
             <div className="review-page">
-                <DashboardNavbar />
                 <div className="review-loading">
                     Loading your information...
                 </div>
@@ -69,7 +64,6 @@ function Review() {
 
     return (
         <div className="review-page">
-            <DashboardNavbar />
             <div className="review-main">
                 <div className="review-box">
                     <div className="review-header">
@@ -259,7 +253,6 @@ function Review() {
                         </button>
                     </div>
                 </div>
-                <WhatHappensNext />
             </div>
         </div>
     );

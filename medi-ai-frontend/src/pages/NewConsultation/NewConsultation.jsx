@@ -1,9 +1,7 @@
-import DashboardNavbar from "../../components/DashboardNavbar/DashboardNavbar.jsx";
 import "./NewConsultation.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowLeftLong, faCircleCheck, faLightbulb, faPlus, faShieldHalved, faWarning, faCalendarDays, faChartSimple, faCross, faXmark } from "@fortawesome/free-solid-svg-icons";
+import { faArrowLeftLong, faPlus, faShieldHalved, faCalendarDays, faChartSimple, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useState } from "react";
-import WhatHappensNext from "../../components/WhatHappensNext/WhatHappensNext.jsx";
 import Loader from "../../components/Loader/Loader.jsx";
 import checkAccessForConsultationPage from "../../utils/checkAccessForConsultationPage.js";
 
@@ -123,7 +121,6 @@ function NewConsultation() {
 };
     return (
         <div className="new-consultation">
-            <DashboardNavbar />
             <div className="new-consultation-main">
                 <div className="nc-box">
                     <div className="nc-header-box">
@@ -330,7 +327,6 @@ function NewConsultation() {
                         </div>
                     </div>
                 </div>
-                <WhatHappensNext />
             </div>
         </div>
     );

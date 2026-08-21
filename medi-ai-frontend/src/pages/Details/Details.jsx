@@ -1,6 +1,4 @@
 import checkAccessForDetailPage from "../../utils/checkAccessForDetailPage.js";
-import DashboardNavbar from "../../components/DashboardNavbar/DashboardNavbar.jsx";
-import WhatHappensNext from "../../components/WhatHappensNext/WhatHappensNext.jsx";
 import "./Details.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeftLong, faCalendarDays, faChevronDown, faShieldHalved } from "@fortawesome/free-solid-svg-icons";
@@ -137,7 +135,6 @@ function Details() {
 
     return (
         <div className="details-page">
-            <DashboardNavbar />
             <div className="details-main">
                 <div className="details-box">
                     <div className="details-header">
@@ -337,7 +334,6 @@ function Details() {
                         </div>
                     </form>
                 </div>
-                <WhatHappensNext />
             </div>
         </div>
     );

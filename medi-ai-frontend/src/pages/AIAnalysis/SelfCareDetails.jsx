@@ -4,14 +4,12 @@ import {
     faArrowLeftLong,
     faShieldHalved,
     faHandHoldingHeart,
-    faCircleCheck,
     faCircleInfo,
     faStethoscope,
     faLightbulb,
     faChevronDown,
     faChevronUp
 } from "@fortawesome/free-solid-svg-icons";
-import DashboardNavbar from "../../components/DashboardNavbar/DashboardNavbar.jsx";
 import "./SelfCareDetails.css";
 
 function SelfCareDetails() {
@@ -131,7 +129,7 @@ function SelfCareDetails() {
                     {value.map((item, index) => (
                         <li key={index}>
                             {typeof item === "object" &&
-                            item !== null
+                                item !== null
                                 ? (
                                     <div className="self-care-nested-object">
                                         {Object.entries(item).map(
@@ -214,7 +212,6 @@ function SelfCareDetails() {
     if (loading) {
         return (
             <div className="self-care-details-page">
-                <DashboardNavbar />
 
                 <main className="self-care-details-main">
                     <div className="self-care-details-content">
@@ -243,7 +240,6 @@ function SelfCareDetails() {
     if (error) {
         return (
             <div className="self-care-details-page">
-                <DashboardNavbar />
 
                 <main className="self-care-details-main">
                     <div className="self-care-details-content">
@@ -287,7 +283,6 @@ function SelfCareDetails() {
 
     return (
         <div className="self-care-details-page">
-            <DashboardNavbar />
 
             <main className="self-care-details-main">
                 <div className="self-care-details-content">
@@ -385,36 +380,35 @@ function SelfCareDetails() {
                                         const isObject =
                                             item !== null &&
                                             typeof item ===
-                                                "object";
+                                            "object";
 
                                         const title =
                                             isObject
                                                 ? item.name ||
-                                                  item.title ||
-                                                  item.action ||
-                                                  `Suggestion ${
-                                                      index +
-                                                      1
-                                                  }`
+                                                item.title ||
+                                                item.action ||
+                                                `Suggestion ${index +
+                                                1
+                                                }`
                                                 : String(
-                                                      item
-                                                  );
+                                                    item
+                                                );
 
                                         const details =
                                             isObject
                                                 ? Object.entries(
-                                                      item
-                                                  ).filter(
-                                                      ([
-                                                          key
-                                                      ]) =>
-                                                          key !==
-                                                              "name" &&
-                                                          key !==
-                                                              "title" &&
-                                                          key !==
-                                                              "action"
-                                                  )
+                                                    item
+                                                ).filter(
+                                                    ([
+                                                        key
+                                                    ]) =>
+                                                        key !==
+                                                        "name" &&
+                                                        key !==
+                                                        "title" &&
+                                                        key !==
+                                                        "action"
+                                                )
                                                 : [];
 
                                         const isOpen =
@@ -423,11 +417,10 @@ function SelfCareDetails() {
 
                                         return (
                                             <div
-                                                className={`self-care-card ${
-                                                    isOpen
+                                                className={`self-care-card ${isOpen
                                                         ? "open"
                                                         : ""
-                                                }`}
+                                                    }`}
                                                 key={index}
                                             >
                                                 <button
@@ -479,7 +472,7 @@ function SelfCareDetails() {
                                                 {isOpen && (
                                                     <div className="self-care-card-body">
                                                         {isObject &&
-                                                        details.length >
+                                                            details.length >
                                                             0 ? (
                                                             details.map(
                                                                 ([
@@ -521,17 +514,7 @@ function SelfCareDetails() {
                                                                 }
                                                             />
 
-                                                            <span>
-                                                                Self-care
-                                                                recommendations
-                                                                are
-                                                                general
-                                                                guidance
-                                                                and may
-                                                                not be
-                                                                suitable
-                                                                for
-                                                                everyone.
+                                                            <span>Self-care recommendations are general guidance and may not be suitable for everyone.
                                                             </span>
                                                         </div>
                                                     </div>
@@ -603,91 +586,6 @@ function SelfCareDetails() {
                     </div>
                 </div>
 
-                <aside className="self-care-sidebar">
-                    <div className="self-care-side-card">
-                        <div className="self-care-side-icon">
-                            <FontAwesomeIcon
-                                icon={
-                                    faHandHoldingHeart
-                                }
-                            />
-                        </div>
-
-                        <h3>
-                            Taking care of
-                            yourself
-                        </h3>
-
-                        <p>
-                            Small, appropriate
-                            lifestyle steps can
-                            sometimes help you feel
-                            more comfortable while
-                            you monitor your symptoms.
-                        </p>
-
-                        <div className="self-care-side-point">
-                            <FontAwesomeIcon
-                                icon={
-                                    faCircleCheck
-                                }
-                            />
-
-                            <span>
-                                Follow recommendations
-                                that are appropriate
-                                for you.
-                            </span>
-                        </div>
-
-                        <div className="self-care-side-point">
-                            <FontAwesomeIcon
-                                icon={
-                                    faCircleCheck
-                                }
-                            />
-
-                            <span>
-                                Stay aware of changes
-                                in your symptoms.
-                            </span>
-                        </div>
-
-                        <div className="self-care-side-point">
-                            <FontAwesomeIcon
-                                icon={
-                                    faCircleCheck
-                                }
-                            />
-
-                            <span>
-                                Seek professional
-                                advice when needed.
-                            </span>
-                        </div>
-                    </div>
-
-                    <div className="self-care-side-warning">
-                        <div className="self-care-side-warning-title">
-                            <FontAwesomeIcon
-                                icon={
-                                    faCircleInfo
-                                }
-                            />
-
-                            <h3>
-                                Remember
-                            </h3>
-                        </div>
-
-                        <p>
-                            Self-care should never
-                            delay emergency medical
-                            treatment when serious
-                            symptoms are present.
-                        </p>
-                    </div>
-                </aside>
             </main>
         </div>
     );

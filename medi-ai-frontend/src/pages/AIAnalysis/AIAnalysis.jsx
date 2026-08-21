@@ -10,10 +10,8 @@ import {
     faBookmark,
     faDownload,
     faCircleCheck,
-    faLightbulb,
     faChevronRight
 } from "@fortawesome/free-solid-svg-icons";
-import DashboardNavbar from "../../components/DashboardNavbar/DashboardNavbar.jsx";
 import "./AIAnalysis.css";
 
 function AIAnalysis() {
@@ -213,7 +211,6 @@ function AIAnalysis() {
     if (loading) {
         return (
             <div className="analysis-page">
-                <DashboardNavbar />
                 <main className="analysis-main">
                     <div className="analysis-content">
                         <div className="analysis-card">
@@ -233,7 +230,6 @@ function AIAnalysis() {
     if (error) {
         return (
             <div className="analysis-page">
-                <DashboardNavbar />
                 <main className="analysis-main">
                     <div className="analysis-content">
                         <div className="analysis-card">
@@ -319,7 +315,6 @@ function AIAnalysis() {
 
     return (
         <div className="analysis-page">
-            <DashboardNavbar />
 
             <main className="analysis-main">
                 <div className="analysis-content">
@@ -753,178 +748,6 @@ function AIAnalysis() {
                     </div>
                 </div>
 
-                <aside className="analysis-sidebar">
-                    <div className="analysis-side-card">
-                        <h3>
-                            What happens next?
-                        </h3>
-
-                        <div className="analysis-side-step">
-                            <div className="analysis-side-number">
-                                1
-                            </div>
-
-                            <div>
-                                <h4>
-                                    Our AI will analyze
-                                    your symptoms
-                                </h4>
-
-                                <p>
-                                    We'll look at possible
-                                    explanations and relevant
-                                    information.
-                                </p>
-                            </div>
-                        </div>
-
-                        <div className="analysis-side-step">
-                            <div className="analysis-side-number">
-                                2
-                            </div>
-
-                            <div>
-                                <h4>
-                                    You'll receive a
-                                    detailed response
-                                </h4>
-
-                                <p>
-                                    Including guidance,
-                                    warning signs, and
-                                    recommendations.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="analysis-tips-card">
-                        <div className="analysis-side-heading">
-                            <div className="analysis-side-heading-icon">
-                                <FontAwesomeIcon
-                                    icon={
-                                        faLightbulb
-                                    }
-                                />
-                            </div>
-
-                            <h3>
-                                Tips for better results
-                            </h3>
-                        </div>
-
-                        <ul>
-                            <li>
-                                <FontAwesomeIcon
-                                    icon={
-                                        faCircleCheck
-                                    }
-                                />
-                                <span>
-                                    Be specific about
-                                    your symptoms
-                                </span>
-                            </li>
-
-                            <li>
-                                <FontAwesomeIcon
-                                    icon={
-                                        faCircleCheck
-                                    }
-                                />
-                                <span>
-                                    Include when they
-                                    started
-                                </span>
-                            </li>
-
-                            <li>
-                                <FontAwesomeIcon
-                                    icon={
-                                        faCircleCheck
-                                    }
-                                />
-                                <span>
-                                    Mention any
-                                    medications
-                                </span>
-                            </li>
-
-                            <li>
-                                <FontAwesomeIcon
-                                    icon={
-                                        faCircleCheck
-                                    }
-                                />
-                                <span>
-                                    Share relevant
-                                    medical history
-                                </span>
-                            </li>
-                        </ul>
-                    </div>
-
-                    <div className="analysis-emergency-card">
-                        <div className="analysis-side-heading">
-                            <div className="emergency-icon">
-                                <FontAwesomeIcon
-                                    icon={
-                                        faTriangleExclamation
-                                    }
-                                />
-                            </div>
-
-                            <h3>
-                                Emergency warnings
-                            </h3>
-                        </div>
-
-                        <ul>
-                            {warningSigns.length >
-                            0 ? (
-                                warningSigns
-                                    .slice(0, 5)
-                                    .map(
-                                        (
-                                            warning,
-                                            index
-                                        ) => (
-                                            <li
-                                                key={
-                                                    index
-                                                }
-                                            >
-                                                {typeof warning ===
-                                                "object"
-                                                    ? warning.name ||
-                                                      warning.title ||
-                                                      warning.warning ||
-                                                      "Warning sign"
-                                                    : warning}
-                                            </li>
-                                        )
-                                    )
-                            ) : (
-                                <>
-                                    <li>
-                                        Severe chest
-                                        pain
-                                    </li>
-                                    <li>
-                                        Difficulty
-                                        breathing
-                                    </li>
-                                    <li>
-                                        Severe bleeding
-                                    </li>
-                                    <li>
-                                        Sudden confusion
-                                    </li>
-                                </>
-                            )}
-                        </ul>
-                    </div>
-                </aside>
             </main>
         </div>
     );

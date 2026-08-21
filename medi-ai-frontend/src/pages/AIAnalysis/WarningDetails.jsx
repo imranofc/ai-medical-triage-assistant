@@ -4,13 +4,11 @@ import {
     faArrowLeftLong,
     faShieldHalved,
     faTriangleExclamation,
-    faCircleCheck,
     faCircleInfo,
     faStethoscope,
     faChevronDown,
     faChevronUp
 } from "@fortawesome/free-solid-svg-icons";
-import DashboardNavbar from "../../components/DashboardNavbar/DashboardNavbar.jsx";
 import "./WarningDetails.css";
 
 function WarningDetails() {
@@ -309,8 +307,6 @@ function WarningDetails() {
     if (loading) {
         return (
             <div className="warning-details-page">
-                <DashboardNavbar />
-
                 <main className="warning-details-main">
                     <div className="warning-details-content">
                         <div className="warning-main-card">
@@ -336,7 +332,6 @@ function WarningDetails() {
     if (error) {
         return (
             <div className="warning-details-page">
-                <DashboardNavbar />
 
                 <main className="warning-details-main">
                     <div className="warning-details-content">
@@ -381,7 +376,6 @@ function WarningDetails() {
 
     return (
         <div className="warning-details-page">
-            <DashboardNavbar />
 
             <main className="warning-details-main">
                 <div className="warning-details-content">
@@ -692,86 +686,6 @@ function WarningDetails() {
                     </div>
                 </div>
 
-                <aside className="warning-sidebar">
-                    <div className="warning-side-card">
-                        <div className="warning-side-icon">
-                            <FontAwesomeIcon
-                                icon={
-                                    faTriangleExclamation
-                                }
-                            />
-                        </div>
-
-                        <h3>
-                            When should you seek help?
-                        </h3>
-
-                        <p>
-                            Pay attention to symptoms that
-                            are severe, persistent, sudden,
-                            or getting worse.
-                        </p>
-
-                        <div className="warning-side-point">
-                            <FontAwesomeIcon
-                                icon={
-                                    faCircleCheck
-                                }
-                            />
-
-                            <span>
-                                Monitor changes in your
-                                symptoms.
-                            </span>
-                        </div>
-
-                        <div className="warning-side-point">
-                            <FontAwesomeIcon
-                                icon={
-                                    faCircleCheck
-                                }
-                            />
-
-                            <span>
-                                Do not ignore severe or
-                                rapidly worsening symptoms.
-                            </span>
-                        </div>
-
-                        <div className="warning-side-point">
-                            <FontAwesomeIcon
-                                icon={
-                                    faCircleCheck
-                                }
-                            />
-
-                            <span>
-                                Contact a healthcare
-                                professional when needed.
-                            </span>
-                        </div>
-                    </div>
-
-                    <div className="warning-side-emergency">
-                        <div className="warning-side-emergency-title">
-                            <FontAwesomeIcon
-                                icon={
-                                    faTriangleExclamation
-                                }
-                            />
-
-                            <h3>
-                                Emergency
-                            </h3>
-                        </div>
-
-                        <p>
-                            For a medical emergency, do not
-                            wait for AI guidance. Seek
-                            immediate professional care.
-                        </p>
-                    </div>
-                </aside>
             </main>
         </div>
     );

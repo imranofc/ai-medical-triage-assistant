@@ -2,12 +2,13 @@
     */
 
 .self-care-details-page {
-    width: 100%;
+    width: 80%;
     min-height: 100vh;
     background: #f8fafd;
     box-sizing: border-box;
     font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
     color: #17233c;
+    justify-self: center;
 }
 
 .self-care-details-page *,
@@ -24,13 +25,10 @@
     */
 
 .self-care-details-main {
-    width: calc(100% - 300px);
+    width: 100%;
     min-width: 0;
     min-height: calc(100vh - 76px);
-    margin-left: 300px;
     padding: 20px;
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) 320px;
     gap: 20px;
     align-items: start;
 }
@@ -38,15 +36,6 @@
 .self-care-details-content {
     width: 100%;
     min-width: 0;
-}
-
-.self-care-sidebar {
-    width: 100%;
-    min-width: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    align-self: start;
 }
 
 /* Main Card
@@ -79,7 +68,7 @@
     gap: 14px;
 }
 
-.self-care-title-box > div {
+.self-care-title-box>div {
     min-width: 0;
 }
 
@@ -254,7 +243,7 @@
     gap: 14px;
 }
 
-.self-care-card-title > div:last-child {
+.self-care-card-title>div:last-child {
     min-width: 0;
 }
 
@@ -523,108 +512,6 @@
     height: 14px;
 }
 
-/* Sidebar
-    */
-
-.self-care-side-card {
-    width: 100%;
-    padding: 22px;
-    border: 1px solid #e2e8f0;
-    border-radius: 12px;
-    background: #ffffff;
-}
-
-.self-care-side-icon {
-    width: 48px;
-    height: 48px;
-    margin-bottom: 15px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 12px;
-    background: #eef4ff;
-    color: #1769ff;
-}
-
-.self-care-side-icon svg {
-    width: 18px;
-    height: 18px;
-}
-
-.self-care-side-card h3 {
-    margin: 0 0 9px;
-    color: #17233c;
-    font-size: 17px;
-    font-weight: 700;
-    line-height: 1.4;
-}
-
-.self-care-side-card > p {
-    margin: 0 0 18px;
-    color: #526b8e;
-    font-size: 14px;
-    line-height: 1.6;
-}
-
-.self-care-side-point {
-    margin-top: 13px;
-    display: flex;
-    align-items: flex-start;
-    gap: 10px;
-}
-
-.self-care-side-point svg {
-    width: 15px;
-    height: 15px;
-    flex-shrink: 0;
-    margin-top: 3px;
-    color: #1fa45b;
-}
-
-.self-care-side-point span {
-    color: #526b8e;
-    font-size: 13px;
-    line-height: 1.55;
-}
-
-/* Sidebar Warning
-    */
-
-.self-care-side-warning {
-    width: 100%;
-    padding: 18px;
-    border: 1px solid #ffd0c2;
-    border-radius: 12px;
-    background: #fff8f5;
-}
-
-.self-care-side-warning-title {
-    margin-bottom: 10px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.self-care-side-warning-title svg {
-    width: 16px;
-    height: 16px;
-    color: #ed6a3d;
-}
-
-.self-care-side-warning-title h3 {
-    margin: 0;
-    color: #17233c;
-    font-size: 15px;
-    font-weight: 700;
-}
-
-.self-care-side-warning p {
-    margin: 0;
-    color: #526b8e;
-    font-size: 13px;
-    line-height: 1.6;
-}
-
 /* Loading / Empty / Error
     */
 
@@ -677,7 +564,7 @@
     line-height: 1.6;
 }
 
-.self-care-empty > svg {
+.self-care-empty>svg {
     width: 30px;
     height: 30px;
     margin-bottom: 16px;
@@ -711,28 +598,9 @@
 }
 
 @media (min-width: 801px) {
-    .self-care-details-page > .self-care-details-main {
+    .self-care-details-page>.self-care-details-main {
         position: relative;
         z-index: 1;
-        margin-top: -614px;
-    }
-}
-
-/* Large Desktop
-    */
-
-@media (min-width: 1200px) {
-    .self-care-details-page > .self-care-details-main {
-        margin-top: -614px;
-    }
-}
-
-/* Medium Desktop
-    */
-
-@media (min-width: 801px) and (max-width: 1199px) {
-    .self-care-details-page > .self-care-details-main {
-        margin-top: -614px;
     }
 }
 
@@ -741,11 +609,12 @@
 
 @media (max-width: 1100px) {
     .self-care-details-main {
-        width: calc(100% - 240px);
-        margin-left: 240px;
         padding: 18px;
-        grid-template-columns: minmax(0, 1fr) 280px;
         gap: 15px;
+    }
+
+    .self-care-details-page {
+        width: 90%;
     }
 
     .self-care-main-card {
@@ -761,36 +630,23 @@
     }
 }
 
-@media (max-width: 900px) {
-    .self-care-details-main {
-        grid-template-columns: 1fr;
-    }
 
-    .self-care-sidebar {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-    }
-}
 
 /* Mobile
     */
 
 @media (max-width: 800px) {
     .self-care-details-main {
-        width: 100%;
-        margin-left: 0;
         padding: 15px;
-        display: block;
     }
 
-    .self-care-details-page > .self-care-details-main {
+    .self-care-details-page {
+        width: 95%;
+    }
+
+    .self-care-details-page>.self-care-details-main {
         margin-top: 0;
         position: relative;
-    }
-
-    .self-care-sidebar {
-        display: flex;
-        margin-top: 15px;
     }
 
     .self-care-header {
@@ -926,9 +782,5 @@
 
     .self-care-nested-item strong {
         min-width: 0;
-    }
-
-    .self-care-side-card {
-        padding: 16px;
     }
 }

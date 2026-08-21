@@ -1,17 +1,18 @@
 .analysis-page {
-    width: 100%;
+    width: 80%;
     min-height: calc(100vh - 76px);
     background-color: #f8fafd;
     display: grid;
-    grid-template-columns: 300px minmax(0, 1fr);
+    grid-template-columns: minmax(0, 1fr);
     align-items: start;
+    justify-self: center;
 }
 
 .analysis-main {
     min-width: 0;
     width: auto;
     display: grid;
-    grid-template-columns: minmax(0, 1fr) 250px;
+    grid-template-columns: minmax(0, 1fr);
     gap: 20px;
     margin: 20px;
 }
@@ -460,178 +461,20 @@
     background-color: #f1f6ff;
 }
 
-/* Right Sidebar */
-
-.analysis-sidebar {
-    width: 250px;
-    min-width: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.analysis-side-card,
-.analysis-tips-card,
-.analysis-emergency-card {
-    box-sizing: border-box;
-    background-color: #ffffff;
-    border: 1px solid #e2e8f0;
-    border-radius: 16px;
-}
-
-/* What happens */
-
-.analysis-side-card {
-    padding: 22px 18px;
-}
-
-.analysis-side-card > h3 {
-    margin: 0 0 24px;
-    color: #17233c;
-    font-size: 16px;
-}
-
-.analysis-side-step {
-    display: flex;
-    align-items: flex-start;
-    gap: 12px;
-    margin-bottom: 22px;
-}
-
-.analysis-side-step:last-child {
-    margin-bottom: 0;
-}
-
-.analysis-side-number {
-    width: 28px;
-    height: 28px;
-    flex-shrink: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    background-color: #1769ff;
-    color: #ffffff;
-    font-size: 13px;
-    font-weight: 600;
-}
-
-.analysis-side-step h4 {
-    margin: 2px 0 5px;
-    color: #17233c;
-    font-size: 13px;
-    line-height: 1.35;
-}
-
-.analysis-side-step p {
-    margin: 0;
-    color: #64748b;
-    font-size: 12px;
-    line-height: 1.7;
-}
-
-/* Tips */
-
-.analysis-tips-card,
-.analysis-emergency-card {
-    padding: 15px;
-}
-
-.analysis-tips-card {
-    background-color: #ffffff;
-}
-
-.analysis-side-heading {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-bottom: 15px;
-}
-
-.analysis-side-heading h3 {
-    margin: 0;
-    color: #17233c;
-    font-size: 13px;
-}
-
-.analysis-side-heading-icon,
-.emergency-icon {
-    width: 34px;
-    height: 34px;
-    flex-shrink: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-}
-
-.analysis-side-heading-icon {
-    color: #1769ff;
-    background-color: #e8f0ff;
-}
-
-.emergency-icon {
-    color: #f57c22;
-    background-color: #ffe3d4;
-}
-
-.analysis-tips-card ul {
-    margin: 0;
-    padding: 0;
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.analysis-tips-card li {
-    display: flex;
-    align-items: flex-start;
-    gap: 7px;
-    color: #17233c;
-    font-size: 12px;
-    line-height: 1.4;
-}
-
-.analysis-tips-card li svg {
-    color: #159447;
-    margin-top: 2px;
-    flex-shrink: 0;
-}
-
-/* Emergency */
-
-.analysis-emergency-card {
-    background-color: #fff9f6;
-}
-
-.analysis-emergency-card ul {
-    margin: 0;
-    padding-left: 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 9px;
-}
-
-.analysis-emergency-card li {
-    color: #17233c;
-    font-size: 12px;
-    line-height: 1.4;
-}
 
 /* Responsive */
 
 @media (max-width: 1200px) {
     .analysis-main {
-        grid-template-columns: minmax(0, 1fr) 230px;
-    }
-
-    .analysis-sidebar {
-        width: 230px;
+        grid-template-columns: minmax(0, 1fr);
     }
 
     .analysis-step-line {
         margin: 0 12px;
+    }
+
+    .analysis-page {
+        width: 90%;
     }
 }
 
@@ -640,21 +483,7 @@
         grid-template-columns: 1fr;
     }
 
-    .analysis-sidebar {
-        width: 100%;
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        align-items: start;
-    }
 
-    .analysis-side-card {
-        grid-column: 1 / -1;
-    }
-
-    .analysis-tips-card,
-    .analysis-emergency-card {
-        min-width: 0;
-    }
 }
 
 @media (max-width: 800px) {
@@ -732,13 +561,6 @@
         width: 100%;
     }
 
-    .analysis-sidebar {
-        grid-template-columns: 1fr;
-    }
-
-    .analysis-side-card {
-        grid-column: auto;
-    }
 }
 
 @media (max-width: 500px) {
@@ -797,15 +619,8 @@
         padding: 12px;
     }
 
-    .analysis-action-right {
-        grid-template-columns: 1fr;
-    }
 
-    .analysis-sidebar {
-        gap: 10px;
-    }
-
-    .analysis-side-card {
-        padding: 18px 15px;
+        .analysis-page{
+        width: 95%;
     }
 }

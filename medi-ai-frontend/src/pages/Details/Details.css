@@ -1,10 +1,9 @@
 .details-page {
-    width: 100%;
+    width: 80%;
     min-height: calc(100vh - 76px);
     background-color: #f8fafd;
-    display: grid;
-    grid-template-columns: 300px minmax(0, 1fr);
     align-items: start;
+    justify-self: center;
 }
 .details-main {
     min-width: 0;
@@ -14,7 +13,7 @@
     margin: 20px;
 }
 .details-box {
-    width: calc(100% - 270px);
+    width: 100%;
     background-color: white;
     border: 1px solid #e2e8f0;
     border-radius: 12px;
@@ -249,10 +248,14 @@
     .details-box {
         width: 100%;
     }
+
+    .details-page{
+        width: 90%;
+    }
 }
 @media (max-width: 800px) {
     .details-page {
-        display: block;
+        width: 95%;
     }
     .form-row {
         flex-direction: column;
