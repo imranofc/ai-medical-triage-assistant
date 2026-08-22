@@ -70,9 +70,8 @@ function Login() {
 
       localStorage.setItem("refresh_token", data.refresh);
 
-      console.log("Login successful");
-      console.log(data);
-      navigate("/dashboard");
+      window.location.href = "http://localhost:3000/new-consultation/"
+      // navigate("/dashboard");
     } catch (error) {
       console.error("Login error:", error);
 

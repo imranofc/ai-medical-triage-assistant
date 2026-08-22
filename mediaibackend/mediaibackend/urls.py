@@ -12,4 +12,6 @@ urlpatterns = [
     path('api/petientdetail/', PetientDetailView.as_view(), name="patientdetail"),
     path('api/consultation-review/', consultation_review, name="consultation_review"),
     path('api/analysis/', AnalysisView.as_view(), name="analysis"),
+    path('api/check-login/', check_login, name="check_login"),
+    path("api/logout/", logout, name="logout"),
 ]

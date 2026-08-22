@@ -1,4 +1,4 @@
-import checkAccessForDetailPage from "../../utils/checkAccessForDetailPage.js";
+import checkAccessForConsultationPage from "../../utils/checkAccessForConsultationPage";
 import "./Details.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeftLong, faCalendarDays, faChevronDown, faShieldHalved } from "@fortawesome/free-solid-svg-icons";
@@ -26,7 +26,7 @@ function Details() {
             try {
                 setLoading(true);
                 setError("");
-                const data = await checkAccessForDetailPage();
+                const data = await checkAccessForConsultationPage();
                 if (data) {
                     setAge(data.age != null ? String(data.age) : "");
                     setGender(

@@ -3,6 +3,11 @@ async function checkAccessForReviewPage() {
     const id = urlParams.get("id");
     const token = localStorage.getItem("access_token");
 
+    if (!token) {
+        window.location.href = "/login";
+        return;
+    }
+
     if (!id) {
         window.location.href = "/new-consultation";
         return null;
@@ -27,6 +32,10 @@ async function checkAccessForReviewPage() {
     if (response.status === 403 || response.status === 404) {
         window.location.href = "/new-consultation";
         return null;
+    }
+
+    if (response.status === 208) {
+        window.location.href = `/new-consultation/analysis?id=${id}`
     }
 
     if (response.status === 200) {

@@ -697,21 +697,6 @@ function AIAnalysis() {
                         </div>
 
                         <div className="analysis-actions">
-                            <button
-                                className="analysis-back-btn"
-                                onClick={() =>
-                                    window.history.back()
-                                }
-                            >
-                                <FontAwesomeIcon
-                                    icon={
-                                        faArrowLeftLong
-                                    }
-                                />
-                                Back to Review
-                            </button>
-
-                            <div className="analysis-action-right">
                                 <button
                                     className="analysis-save-btn"
                                     onClick={() =>
@@ -727,6 +712,8 @@ function AIAnalysis() {
                                     />
                                     Save Report
                                 </button>
+
+                            <div className="analysis-action-right">
 
                                 <button
                                     className="analysis-download-btn"

@@ -12,6 +12,8 @@ function NewConsultation() {
     const [severity, setSeverity] = useState("");
     const [symptomsDescription, setSymptomsDescription] = useState("");
     const [loader, setLoader] = useState(false);
+    const token = localStorage.getItem("access_token");
+
 
 
 
@@ -19,6 +21,10 @@ function NewConsultation() {
     const id = urlParams.get("id");
 
     useEffect(() => {
+        if (!token) {
+            window.location.href = "/login";
+            return;
+        }
         if (!id) {
             setSymptomList([]);
             setDuration("");
@@ -30,6 +36,7 @@ function NewConsultation() {
         const loadData = async () => {
             try {
                 const data = await checkAccessForConsultationPage();
+
                 if (data) {
                     setSymptomList(data.symptoms || []);
                     setDuration(data.duration || "");
@@ -65,60 +72,60 @@ function NewConsultation() {
         );
     };
 
-  const handleSubmit = async () => {
-    if (symptomList.length === 0) {
-        alert("Please add at least one symptom.");
-        return;
-    }
-    if (!duration) {
-        alert("Please select the duration.");
-        return;
-    }
-    if (!severity) {
-        alert("Please select the severity level.");
-        return;
-    }
-    if (!symptomsDescription.trim()) {
-        alert("Please describe your symptoms.");
-        return;
-    }
-
-    const token = localStorage.getItem("access_token");
-    setLoader(true);
-
-    try {
-        const url = id
-            ? `http://127.0.0.1:8000/api/consultation/?id=${id}`
-            : "http://127.0.0.1:8000/api/consultation/";
-
-        const response = await fetch(url, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${token}`,
-            },
-            body: JSON.stringify({
-                symptoms: symptomList,
-                duration: duration,
-                severity: severity,
-                description: symptomsDescription,
-            }),
-        });
-
-        const data = await response.json();
-
-        console.log("STATUS:", response.status);
-        console.log("DATA:", data);
-
-        if (response.ok) {
-            window.location.href = `/new-consultation/details?id=${data.id}`;
+    const handleSubmit = async () => {
+        if (symptomList.length === 0) {
+            alert("Please add at least one symptom.");
+            return;
         }
-    } catch (error) {
-        console.error("Request failed:", error);
-    } finally {
-        setLoader(false);
-    }
-};
+        if (!duration) {
+            alert("Please select the duration.");
+            return;
+        }
+        if (!severity) {
+            alert("Please select the severity level.");
+            return;
+        }
+        if (!symptomsDescription.trim()) {
+            alert("Please describe your symptoms.");
+            return;
+        }
+
+        const token = localStorage.getItem("access_token");
+        setLoader(true);
+
+        try {
+            const url = id
+                ? `http://127.0.0.1:8000/api/consultation/?id=${id}`
+                : "http://127.0.0.1:8000/api/consultation/";
+
+            const response = await fetch(url, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`,
+                },
+                body: JSON.stringify({
+                    symptoms: symptomList,
+                    duration: duration,
+                    severity: severity,
+                    description: symptomsDescription,
+                }),
+            });
+
+            const data = await response.json();
+
+            console.log("STATUS:", response.status);
+            console.log("DATA:", data);
+
+            if (response.ok) {
+                window.location.href = `/new-consultation/details?id=${data.id}`;
+            }
+        } catch (error) {
+            console.error("Request failed:", error);
+        } finally {
+            setLoader(false);
+        }
+    };
     return (
         <div className="new-consultation">
             <div className="new-consultation-main">

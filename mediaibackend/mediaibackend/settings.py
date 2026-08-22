@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'mediai',
     'corsheaders',
     'rest_framework',
+    "rest_framework_simplejwt.token_blacklist",
 ]
 
 MIDDLEWARE = [
@@ -150,4 +151,24 @@ REST_FRAMEWORK = {
     ),
 }
 
-GEMINI_API_KEY = "add your own gemini api key"
+# gemini api key
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
+
+#jwt settings
+
+from datetime import timedelta
+
+SIMPLE_JWT = {
+
+    "ACCESS_TOKEN_LIFETIME": timedelta(hours=1),
+    
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=7),
+    
+    "ROTATE_REFRESH_TOKENS": True,      # New refresh token issued on reuse
+    "BLACKLIST_AFTER_ROTATION": True,   # Old refresh token becomes invalid
+}

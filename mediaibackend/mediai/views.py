@@ -4,6 +4,8 @@ from rest_framework.views import APIView
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.authentication import JWTAuthentication
+from rest_framework_simplejwt.tokens import RefreshToken
+
 from rest_framework.decorators import (
     authentication_classes,
     permission_classes,
@@ -49,6 +51,41 @@ class RegisterView(APIView):
             status=status.HTTP_400_BAD_REQUEST
         )
 
+@api_view(["GET"])
+@authentication_classes([JWTAuthentication])
+@permission_classes([IsAuthenticated])
+def check_login(request):
+    return Response({
+        "is_authenticated": True,
+        "name" : request.user.first_name.split()[0].title()
+    })
+
+@api_view(["POST"])
+@permission_classes([IsAuthenticated])
+def logout(request):
+    refresh_token = request.data.get("refresh")
+
+    if not refresh_token:
+        return Response(
+            {"error": "Refresh token is required"},
+            status=status.HTTP_400_BAD_REQUEST
+        )
+
+    try:
+        token = RefreshToken(refresh_token)
+        token.blacklist()
+
+        return Response(
+            {"message": "Logged out successfully"},
+            status=status.HTTP_205_RESET_CONTENT
+        )
+
+    except Exception:
+        return Response(
+            {"error": "Invalid refresh token"},
+            status=status.HTTP_400_BAD_REQUEST
+        )
+
 
 class ConsultationView(APIView):
 
@@ -78,6 +115,11 @@ class ConsultationView(APIView):
                 },
                 status=status.HTTP_404_NOT_FOUND
             )
+
+        analysis = Analysis.objects.filter(consultation=consultation).last()
+
+        if analysis is not None:
+            return Response(status=status.HTTP_208_ALREADY_REPORTED)
 
         return Response(
             {
@@ -161,6 +203,10 @@ def new_consultation(request):
             },
             status=status.HTTP_403_FORBIDDEN
         )
+    analysis = Analysis.objects.filter(consultation=consultation).last()
+
+    if analysis is not None:
+        return Response(status=status.HTTP_208_ALREADY_REPORTED)
 
     patient_detail = PatientDetail.objects.filter(
         consultation=consultation
@@ -230,6 +276,11 @@ def consultation_review(request):
             },
             status=status.HTTP_403_FORBIDDEN
         )
+    
+    analysis = Analysis.objects.filter(consultation=patient_detail.consultation).last()
+
+    if analysis is not None:
+        return Response(status=status.HTTP_208_ALREADY_REPORTED)
 
     serializer = PatientDetailSerializer(
         patient_detail

@@ -404,7 +404,7 @@
     margin-top: 20px;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: space-around;
     gap: 15px;
 }
 
@@ -552,8 +552,6 @@
 
     .analysis-action-right {
         width: 100%;
-        display: grid;
-        grid-template-columns: 1fr 1fr;
     }
 
     .analysis-save-btn,
