@@ -12,6 +12,7 @@ import AnalysisDetails from "./pages/AIAnalysis/AnalysisDetails.jsx";
 import WarningDetails from "./pages/AIAnalysis/WarningDetails.jsx";
 import SelfCareDetails from "./pages/AIAnalysis/SelfCareDetails.jsx";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import History from "./pages/History/History.jsx";
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
         <Route path="/new-consultation/analysis/details" element={<AnalysisDetails />} />
         <Route path="/new-consultation/analysis/warnings" element={<WarningDetails />} />
         <Route path="/new-consultation/analysis/self-care" element={<SelfCareDetails />} />
+        <Route path="/history" element={<History />} />
       </Routes>
       <Footer />
     </BrowserRouter>

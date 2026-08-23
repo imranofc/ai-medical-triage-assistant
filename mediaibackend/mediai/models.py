@@ -17,6 +17,7 @@ class Consultation(models.Model):
     description = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     draft = models.BooleanField(default=True)
+    favourite = models.BooleanField(default=False)
 
     def __str__(self):
         return f"Consultation #{self.id}"

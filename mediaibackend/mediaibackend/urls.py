@@ -14,4 +14,5 @@ urlpatterns = [
     path('api/analysis/', AnalysisView.as_view(), name="analysis"),
     path('api/check-login/', check_login, name="check_login"),
     path("api/logout/", logout, name="logout"),
+    path('api/history/', history, name="history"),
 ]

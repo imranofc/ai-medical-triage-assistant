@@ -5,6 +5,8 @@ from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework_simplejwt.tokens import RefreshToken
+from django.db.models import Q
+
 
 from rest_framework.decorators import (
     authentication_classes,
@@ -494,3 +496,81 @@ class AnalysisView(APIView):
                 },
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
+
+
+
+# History
+
+@api_view(["GET"])
+@authentication_classes([JWTAuthentication])
+@permission_classes([IsAuthenticated])
+def history(request):
+    filter_type = request.query_params.get("filter", "total")
+    search = request.query_params.get("search", "").strip()
+
+    consultations = Consultation.objects.filter(
+        user=request.user
+    ).prefetch_related("symptoms").order_by("-created_at")
+
+    if filter_type == "completed":
+        consultations = consultations.filter(draft=False)
+    elif filter_type == "draft":
+        consultations = consultations.filter(draft=True)
+    elif filter_type == "favourite":
+        consultations = consultations.filter(favourite=True)
+
+    if search:
+        consultations = consultations.filter(
+            Q(description__icontains=search) |
+            Q(duration__icontains=search) |
+            Q(severity__icontains=search) |
+            Q(symptoms__symptom__icontains=search)
+        ).distinct()
+
+    total = Consultation.objects.filter(
+        user=request.user
+    ).count()
+
+    completed = Consultation.objects.filter(
+        user=request.user,
+        draft=False
+    ).count()
+
+    draft = Consultation.objects.filter(
+        user=request.user,
+        draft=True
+    ).count()
+
+    favourite = Consultation.objects.filter(
+        user=request.user,
+        favourite=True
+    ).count()
+
+    return Response({
+        "stats": {
+            "total": total,
+            "completed": completed,
+            "draft": draft,
+            "favourite": favourite
+        },
+        "results": [
+            {
+                "id": consultation.id,
+                "name": ", ".join(
+                    consultation.symptoms.values_list(
+                        "symptom",
+                        flat=True
+                    )[:2]
+                ) or f"Consultation #{consultation.id}",
+                "description": consultation.description[:80],
+                "created_at": consultation.created_at,
+                "status": (
+                    "draft"
+                    if consultation.draft
+                    else "completed"
+                ),
+                "favourite": consultation.favourite
+            }
+            for consultation in consultations
+        ]
+    })
