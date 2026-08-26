@@ -13,6 +13,10 @@ import WarningDetails from "./pages/AIAnalysis/WarningDetails.jsx";
 import SelfCareDetails from "./pages/AIAnalysis/SelfCareDetails.jsx";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import History from "./pages/History/History.jsx";
+import HowItWorks from "./pages/InfoPages/HowItWorks";
+import Safety from "./pages/InfoPages/Safety";
+import Features from "./pages/InfoPages/Features";
+import FAQs from "./pages/InfoPages/FAQs";
 
 function App() {
   return (
@@ -30,6 +34,10 @@ function App() {
         <Route path="/new-consultation/analysis/warnings" element={<WarningDetails />} />
         <Route path="/new-consultation/analysis/self-care" element={<SelfCareDetails />} />
         <Route path="/history" element={<History />} />
+        <Route path="/how-it-works" element={<HowItWorks />} />
+        <Route path="/safety" element={<Safety />} />
+        <Route path="/features" element={<Features />} />
+        <Route path="/faqs" element={<FAQs />} />
       </Routes>
       <Footer />
     </BrowserRouter>

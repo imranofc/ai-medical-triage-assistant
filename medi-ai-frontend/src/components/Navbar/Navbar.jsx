@@ -26,10 +26,10 @@ function Navbar() {
           Home
         </a>
 
-        <a href="#how-it-works">How it works</a>
-        <a href="#safety">Safety</a>
-        <a href="#features">Features</a>
-        <a href="#faqs">FAQs</a>
+        <a href="/how-it-works">How it works</a>
+        <a href="/safety">Safety</a>
+        <a href="/features">Features</a>
+        <a href="/faqs">FAQs</a>
         <a href="#contact">Contact</a>
       </div>
       {isLoggedIn ? (
