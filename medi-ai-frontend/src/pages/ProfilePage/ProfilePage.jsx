@@ -16,10 +16,11 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import useAuth from "../../context/useAuth.js";
 import logout from "../../utils/logout.js";
+import Loader from "../../components/Loader/Loader.jsx";
 
 function ProfilePage() {
     const navigate = useNavigate();
-    const { isLoggedIn, fullName, email, setFullName, setEmail } = useAuth();
+    const { isLoggedIn, fullName, email, setFullName, setEmail, isLoading } = useAuth();
 
     const [isEditing, setIsEditing] = useState(false);
 
@@ -34,10 +35,11 @@ function ProfilePage() {
     const [errors, setErrors] = useState({});
 
     useEffect(() => {
-        if (!isLoggedIn) {
+        if (!isLoading && !isLoggedIn) {
             navigate("/login");
         }
-    }, [isLoggedIn, navigate]);
+    }, [isLoggedIn, navigate, isLoading]);
+
 
     const handleProfileUpdate = async (e) => {
         e.preventDefault();
@@ -166,12 +168,10 @@ function ProfilePage() {
         }
     };
 
-    if (!isLoggedIn) {
-        navigate("/login");
-    }
 
     return (
         <div className="profile-page">
+            {isLoading && <Loader />}
             <main className="profile-container">
                 <div className="profile-page-header">
                     <div className="profile-back" onClick={() => navigate(-1)}>

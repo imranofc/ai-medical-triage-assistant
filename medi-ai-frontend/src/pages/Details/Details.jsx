@@ -1,8 +1,9 @@
-import checkAccessForConsultationPage from "../../utils/checkAccessForConsultationPage";
+import checkAccessForDetailPage from "../../utils/checkAccessForDetailPage";
 import "./Details.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeftLong, faCalendarDays, faChevronDown, faShieldHalved } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useState } from "react";
+import Loader from "../../components/Loader/Loader";
 
 function Details() {
     const [age, setAge] = useState("");
@@ -26,7 +27,7 @@ function Details() {
             try {
                 setLoading(true);
                 setError("");
-                const data = await checkAccessForConsultationPage();
+                const data = await checkAccessForDetailPage();
                 if (data) {
                     setAge(data.age != null ? String(data.age) : "");
                     setGender(
@@ -135,6 +136,7 @@ function Details() {
 
     return (
         <div className="details-page">
+            {loading && <Loader />}
             <div className="details-main">
                 <div className="details-box">
                     <div className="details-header">

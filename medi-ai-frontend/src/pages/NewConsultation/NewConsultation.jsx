@@ -1,19 +1,21 @@
 import "./NewConsultation.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowLeftLong, faPlus, faShieldHalved, faCalendarDays, faChartSimple, faXmark } from "@fortawesome/free-solid-svg-icons";
+import { faArrowLeftLong, faPlus, faShieldHalved, faCalendarDays, faChartSimple, faXmark, } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useState } from "react";
 import Loader from "../../components/Loader/Loader.jsx";
 import checkAccessForConsultationPage from "../../utils/checkAccessForConsultationPage.js";
+import useAuth from "../../context/useAuth.js";
+import { useNavigate } from "react-router-dom";
 
 function NewConsultation() {
+    const navigate = useNavigate();
     const [symptoms, setSymptoms] = useState("");
     const [symptomList, setSymptomList] = useState([]);
     const [duration, setDuration] = useState("");
     const [severity, setSeverity] = useState("");
     const [symptomsDescription, setSymptomsDescription] = useState("");
-    const [loader, setLoader] = useState(false);
-    const token = localStorage.getItem("access_token");
-
+    const [loader, setLoader] = useState(true);
+    const { isLoading, isLoggedIn } = useAuth()
 
 
 
@@ -21,15 +23,18 @@ function NewConsultation() {
     const id = urlParams.get("id");
 
     useEffect(() => {
-        if (!token) {
-            window.location.href = "/login";
-            return;
+        if (!isLoading && !isLoggedIn) {
+            navigate("/login");
         }
+    }, [isLoggedIn, navigate, isLoading]);
+
+    useEffect(() => {
         if (!id) {
             setSymptomList([]);
             setDuration("");
             setSeverity("");
             setSymptomsDescription("");
+            setLoader(false)
             return;
         }
 
@@ -45,6 +50,8 @@ function NewConsultation() {
                 }
             } catch (error) {
                 console.error("Error loading consultation:", error);
+            } finally{
+                setLoader(false)
             }
         };
 
@@ -128,6 +135,7 @@ function NewConsultation() {
     };
     return (
         <div className="new-consultation">
+            {(isLoading || loader) && <Loader />}
             <div className="new-consultation-main">
                 <div className="nc-box">
                     <div className="nc-header-box">

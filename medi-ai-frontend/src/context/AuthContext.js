@@ -7,6 +7,7 @@ export const AuthProvider = ({ children }) => {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [fullName, setFullName] = useState("")
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         const checkAuth = async () => {
@@ -16,6 +17,7 @@ export const AuthProvider = ({ children }) => {
                 setIsLoggedIn(false);
                 setName("");
                 setEmail("");
+                setIsLoading(false);
                 return;
             }
 
@@ -43,7 +45,9 @@ export const AuthProvider = ({ children }) => {
                 setIsLoggedIn(false);
                 setName("");
                 setEmail("");
-            }
+            } finally {
+            setIsLoading(false);
+        }
         };
 
         checkAuth();
@@ -59,6 +63,7 @@ export const AuthProvider = ({ children }) => {
                 setName,
                 setEmail,
                 setFullName,
+                isLoading,
             }}
         >
             {children}
