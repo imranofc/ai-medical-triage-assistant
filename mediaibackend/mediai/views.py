@@ -8,6 +8,7 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.db.models import Q
 from .serializers import UpdateProfileSerializer
+import time
 
 from rest_framework.decorators import (
     authentication_classes,
@@ -58,6 +59,7 @@ class RegisterView(APIView):
 @authentication_classes([JWTAuthentication])
 @permission_classes([IsAuthenticated])
 def check_login(request):
+    time.sleep(3)
     return Response({
         "is_authenticated": True,
         "name" : request.user.first_name.split()[0].title(),
@@ -96,7 +98,7 @@ class ConsultationView(APIView):
 
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
-
+    time.sleep(10)
     def get(self, request):
         consultation_id = request.query_params.get("id")
 
@@ -258,7 +260,6 @@ def consultation_review(request):
             },
             status=status.HTTP_400_BAD_REQUEST
         )
-
     patient_detail = PatientDetail.objects.filter(
         id=consultation_id
     ).first()
