@@ -1,4 +1,5 @@
 from django.conf import settings
+from django.contrib.gis import serializers
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import status
@@ -6,7 +7,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.db.models import Q
-
+from .serializers import UpdateProfileSerializer
 
 from rest_framework.decorators import (
     authentication_classes,
@@ -59,7 +60,9 @@ class RegisterView(APIView):
 def check_login(request):
     return Response({
         "is_authenticated": True,
-        "name" : request.user.first_name.split()[0].title()
+        "name" : request.user.first_name.split()[0].title(),
+        "fullname" : request.user.first_name,
+        "email" : request.user.email,
     })
 
 @api_view(["POST"])
@@ -574,3 +577,34 @@ def history(request):
             for consultation in consultations
         ]
     })
+
+@api_view(["PATCH"])
+@permission_classes([IsAuthenticated])
+@authentication_classes([JWTAuthentication])
+def update_profile(request):
+
+    serializer = UpdateProfileSerializer(
+        request.user,
+        data=request.data,
+        partial=True
+    )
+
+    if serializer.is_valid():
+        serializer.save()
+
+        return Response(
+            {
+                "message": "Profile updated successfully",
+                "status": True
+            },
+            status=status.HTTP_200_OK
+        )
+
+    return Response(
+        {
+            "message": "Profile update failed",
+            "errors": serializer.errors,
+            "status": False
+        },
+        status=status.HTTP_400_BAD_REQUEST
+    )

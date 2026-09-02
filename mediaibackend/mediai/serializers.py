@@ -1,3 +1,5 @@
+#for update profile serializer please check the update_profile view in views.py file
+
 from rest_framework import serializers
 from django.contrib.auth.models import User
 from .models import (
@@ -157,3 +159,67 @@ class AnalysisSerializer(serializers.ModelSerializer):
             'created_at',
             'updated_at'
         ]
+
+
+class UpdateProfileSerializer(serializers.ModelSerializer):
+    password = serializers.CharField(
+        write_only=True,
+        required=False
+    )
+
+    new_password = serializers.CharField(
+        write_only=True,
+        required=False
+    )
+
+    confirm_password = serializers.CharField(
+        write_only=True,
+        required=False
+    )
+
+    class Meta:
+        model = User
+        fields = [
+            'first_name',
+            'email',
+            'password',
+            'new_password',
+            'confirm_password',
+        ]
+
+    def update(self, instance, validated_data):
+
+        if 'new_password' in validated_data:
+            if 'password' not in validated_data:
+                raise serializers.ValidationError(
+                    "Current password is required"
+                )
+
+            if instance.check_password(validated_data['password']):
+                if validated_data['new_password'] == validated_data['confirm_password']:
+                    instance.set_password(
+                        validated_data['new_password']
+                    )
+
+                    validated_data.pop('password')
+                    validated_data.pop('new_password')
+                    validated_data.pop('confirm_password')
+
+                else:
+                    raise serializers.ValidationError(
+                        "New password and confirm password must match"
+                    )
+            else:
+                raise serializers.ValidationError(
+                    "Old password is wrong please enter correct password"
+                )
+
+        else:
+            validated_data.pop('password', None)
+            validated_data.pop('confirm_password', None)
+
+        for field, value in validated_data.items():
+            setattr(instance, field, value)
+
+        instance.save()
+        return instance

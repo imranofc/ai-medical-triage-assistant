@@ -15,4 +15,5 @@ urlpatterns = [
     path('api/check-login/', check_login, name="check_login"),
     path("api/logout/", logout, name="logout"),
     path('api/history/', history, name="history"),
+    path('api/update-profile/', update_profile, name="update_profile"),
 ]

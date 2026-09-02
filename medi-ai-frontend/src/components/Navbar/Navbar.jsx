@@ -1,16 +1,17 @@
 import "./Navbar.css";
-import useIsAuthenticated from "../../hooks/useIsAuthenticated";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleDown, faAngleUp } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 import logout from "../../utils/logout.js";
 import { useNavigate } from "react-router-dom";
+import useAuth from "../../context/useAuth.js";
+
 
 function Navbar() {
-  const { isLoggedIn, name } = useIsAuthenticated();
-  const [open, setOpen] = useState(false);
-  const navigate = useNavigate();
 
+  const navigate = useNavigate();
+  const { name, isLoggedIn } = useAuth();
+  const [open, setOpen] = useState(false)
   return (
     <nav className="navbar">
       <div className="logo">
@@ -34,7 +35,7 @@ function Navbar() {
       </div>
       {isLoggedIn ? (
         <div className="user-profile">
-          <span className="avatar">M</span>
+          <span className="avatar">{name.charAt(0).toUpperCase()}</span>
 
           <span className="user-first-name">Hello, {name}</span>
 
@@ -44,8 +45,9 @@ function Navbar() {
 
           {open && (
             <div className="dropdown-menu">
-              <button>Profile</button>
-              <button onClick={() => navigate("history")}>History</button>
+              <button onClick={() => { navigate("new-consultation"); setOpen(false); }}>New Consultation</button>
+              <button onClick={() => { navigate("profile"); setOpen(false); }}>Profile</button>
+              <button onClick={() => { navigate("history"); setOpen(false); }}>History</button>
               <button onClick={logout}>Logout</button>
             </div>
           )}

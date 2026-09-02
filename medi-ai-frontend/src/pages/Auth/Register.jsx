@@ -152,12 +152,6 @@ function Register() {
       // Successful registration
       navigate("/login");
 
-      // Temporary success simulation
-      console.log("Registration data:", {
-        name: regName.trim(),
-        email: regEmail.trim(),
-        password: regPassword,
-      });
 
     } catch (error) {
       console.error("Registration error:", error);

@@ -17,9 +17,14 @@ import HowItWorks from "./pages/InfoPages/HowItWorks";
 import Safety from "./pages/InfoPages/Safety";
 import Features from "./pages/InfoPages/Features";
 import FAQs from "./pages/InfoPages/FAQs";
+import { AuthProvider } from "./context/AuthContext";
+import ProfilePage from "./pages/ProfilePage/ProfilePage.jsx";
+
+
 
 function App() {
   return (
+    <AuthProvider>
     <BrowserRouter>
       <Navbar />
       <Routes>
@@ -38,9 +43,11 @@ function App() {
         <Route path="/safety" element={<Safety />} />
         <Route path="/features" element={<Features />} />
         <Route path="/faqs" element={<FAQs />} />
+        <Route path="/profile" element={<ProfilePage />} />
       </Routes>
       <Footer />
     </BrowserRouter>
+    </AuthProvider>
   );
 }
 
