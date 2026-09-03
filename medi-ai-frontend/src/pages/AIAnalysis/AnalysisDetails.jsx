@@ -8,9 +8,10 @@ import {
     faCircleInfo,
     faStethoscope,
     faChevronDown,
-    faChevronUp
+    faChevronUp,
 } from "@fortawesome/free-solid-svg-icons";
 import "./AnalysisDetails.css";
+import API_URL from "../../config";
 
 function AnalysisDetails() {
     const urlParams = new URLSearchParams(window.location.search);
@@ -38,14 +39,14 @@ function AnalysisDetails() {
                 }
 
                 const response = await fetch(
-                    `http://127.0.0.1:8000/api/analysis/?id=${consultationId}`,
+                    `${API_URL}/api/analysis/?id=${consultationId}`,
                     {
                         method: "GET",
                         headers: {
                             "Content-Type": "application/json",
-                            Authorization: `Bearer ${token}`
-                        }
-                    }
+                            Authorization: `Bearer ${token}`,
+                        },
+                    },
                 );
 
                 const data = await response.json();
@@ -58,9 +59,7 @@ function AnalysisDetails() {
 
                 if (!response.ok) {
                     throw new Error(
-                        data?.detail ||
-                        data?.error ||
-                        "Failed to load analysis details."
+                        data?.detail || data?.error || "Failed to load analysis details.",
                     );
                 }
 
@@ -74,22 +73,16 @@ function AnalysisDetails() {
                     throw new Error("Analysis data is empty.");
                 }
 
-                const possibleExplanations =
-                    responseData?.possible_explanations;
+                const possibleExplanations = responseData?.possible_explanations;
 
                 if (!Array.isArray(possibleExplanations)) {
-                    throw new Error(
-                        "Possible explanations are not available."
-                    );
+                    throw new Error("Possible explanations are not available.");
                 }
 
                 setExplanations(possibleExplanations);
             } catch (err) {
                 console.error("Analysis Details Error:", err);
-                setError(
-                    err.message ||
-                    "Failed to load analysis details."
-                );
+                setError(err.message || "Failed to load analysis details.");
             } finally {
                 setLoading(false);
             }
@@ -99,8 +92,7 @@ function AnalysisDetails() {
     }, [consultationId]);
 
     const goBack = () => {
-        window.location.href =
-            `/new-consultation/analysis?id=${consultationId}`;
+        window.location.href = `/new-consultation/analysis?id=${consultationId}`;
     };
 
     const formatLabel = (key) => {
@@ -115,26 +107,14 @@ function AnalysisDetails() {
                 <ul className="details-value-list">
                     {value.map((item, index) => (
                         <li key={index}>
-                            {typeof item === "object" &&
-                            item !== null ? (
+                            {typeof item === "object" && item !== null ? (
                                 <div className="nested-object">
-                                    {Object.entries(item).map(
-                                        ([key, nestedValue]) => (
-                                            <div
-                                                className="nested-item"
-                                                key={key}
-                                            >
-                                                <strong>
-                                                    {formatLabel(key)}
-                                                </strong>
-                                                <span>
-                                                    {renderValue(
-                                                        nestedValue
-                                                    )}
-                                                </span>
-                                            </div>
-                                        )
-                                    )}
+                                    {Object.entries(item).map(([key, nestedValue]) => (
+                                        <div className="nested-item" key={key}>
+                                            <strong>{formatLabel(key)}</strong>
+                                            <span>{renderValue(nestedValue)}</span>
+                                        </div>
+                                    ))}
                                 </div>
                             ) : (
                                 String(item)
@@ -145,27 +125,15 @@ function AnalysisDetails() {
             );
         }
 
-        if (
-            value !== null &&
-            typeof value === "object"
-        ) {
+        if (value !== null && typeof value === "object") {
             return (
                 <div className="nested-object">
-                    {Object.entries(value).map(
-                        ([key, nestedValue]) => (
-                            <div
-                                className="nested-item"
-                                key={key}
-                            >
-                                <strong>
-                                    {formatLabel(key)}
-                                </strong>
-                                <span>
-                                    {renderValue(nestedValue)}
-                                </span>
-                            </div>
-                        )
-                    )}
+                    {Object.entries(value).map(([key, nestedValue]) => (
+                        <div className="nested-item" key={key}>
+                            <strong>{formatLabel(key)}</strong>
+                            <span>{renderValue(nestedValue)}</span>
+                        </div>
+                    ))}
                 </div>
             );
         }
@@ -176,22 +144,15 @@ function AnalysisDetails() {
     if (loading) {
         return (
             <div className="analysis-details-page">
-
-
                 <main className="analysis-details-main">
                     <div className="analysis-details-content">
                         <div className="details-main-card">
                             <div className="details-loading">
                                 <div className="details-loader"></div>
 
-                                <h3>
-                                    Loading explanation details...
-                                </h3>
+                                <h3>Loading explanation details...</h3>
 
-                                <p>
-                                    Please wait while we
-                                    prepare your results.
-                                </p>
+                                <p>Please wait while we prepare your results.</p>
                             </div>
                         </div>
                     </div>
@@ -203,34 +164,20 @@ function AnalysisDetails() {
     if (error) {
         return (
             <div className="analysis-details-page">
-
                 <main className="analysis-details-main">
                     <div className="analysis-details-content">
                         <div className="details-main-card">
                             <div className="details-error">
                                 <div className="details-error-icon">
-                                    <FontAwesomeIcon
-                                        icon={
-                                            faTriangleExclamation
-                                        }
-                                    />
+                                    <FontAwesomeIcon icon={faTriangleExclamation} />
                                 </div>
 
-                                <h3>
-                                    Unable to load details
-                                </h3>
+                                <h3>Unable to load details</h3>
 
                                 <p>{error}</p>
 
-                                <button
-                                    className="details-back-btn"
-                                    onClick={goBack}
-                                >
-                                    <FontAwesomeIcon
-                                        icon={
-                                            faArrowLeftLong
-                                        }
-                                    />
+                                <button className="details-back-btn" onClick={goBack}>
+                                    <FontAwesomeIcon icon={faArrowLeftLong} />
                                     Back to Analysis
                                 </button>
                             </div>
@@ -243,7 +190,6 @@ function AnalysisDetails() {
 
     return (
         <div className="analysis-details-page">
-
             <main className="analysis-details-main">
                 <div className="analysis-details-content">
                     <div className="details-main-card">
@@ -254,273 +200,157 @@ function AnalysisDetails() {
                                     onClick={goBack}
                                     type="button"
                                 >
-                                    <FontAwesomeIcon
-                                        icon={faArrowLeftLong}
-                                    />
+                                    <FontAwesomeIcon icon={faArrowLeftLong} />
                                 </button>
 
                                 <div>
-                                    <h2>
-                                        Possible Explanations
-                                    </h2>
+                                    <h2>Possible Explanations</h2>
 
                                     <p>
-                                        Understand the possible
-                                        explanations identified
-                                        from your symptoms.
+                                        Understand the possible explanations identified from your
+                                        symptoms.
                                     </p>
                                 </div>
                             </div>
 
                             <div className="details-secure">
-                                <FontAwesomeIcon
-                                    icon={faShieldHalved}
-                                />
+                                <FontAwesomeIcon icon={faShieldHalved} />
 
-                                <span>
-                                    Secure &amp; Private
-                                </span>
+                                <span>Secure &amp; Private</span>
                             </div>
                         </div>
 
                         <div className="details-info-banner">
                             <div className="details-info-icon">
-                                <FontAwesomeIcon
-                                    icon={faCircleInfo}
-                                />
+                                <FontAwesomeIcon icon={faCircleInfo} />
                             </div>
 
                             <div>
-                                <h4>
-                                    Possible explanations
-                                </h4>
+                                <h4>Possible explanations</h4>
 
                                 <p>
-                                    These are possible
-                                    explanations associated
-                                    with the information you
-                                    provided. They are not a
-                                    confirmed diagnosis.
+                                    These are possible explanations associated with the
+                                    information you provided. They are not a confirmed diagnosis.
                                 </p>
                             </div>
                         </div>
 
                         <div className="details-section-heading">
                             <div>
-                                <span>
-                                    AI Analysis
-                                </span>
+                                <span>AI Analysis</span>
 
-                                <h3>
-                                    Possible explanations
-                                </h3>
+                                <h3>Possible explanations</h3>
                             </div>
 
                             <div className="details-count">
                                 {explanations.length}{" "}
-                                {explanations.length === 1
-                                    ? "explanation"
-                                    : "explanations"}
+                                {explanations.length === 1 ? "explanation" : "explanations"}
                             </div>
                         </div>
 
                         {explanations.length === 0 ? (
                             <div className="details-empty">
-                                <FontAwesomeIcon
-                                    icon={faFileMedical}
-                                />
+                                <FontAwesomeIcon icon={faFileMedical} />
 
-                                <h3>
-                                    No explanations available
-                                </h3>
+                                <h3>No explanations available</h3>
 
-                                <p>
-                                    No detailed explanations
-                                    were included in this
-                                    analysis.
-                                </p>
+                                <p>No detailed explanations were included in this analysis.</p>
                             </div>
                         ) : (
                             <div className="explanations-list">
-                                {explanations.map(
-                                    (item, index) => {
-                                        const isObject =
-                                            item !== null &&
-                                            typeof item ===
-                                                "object";
+                                {explanations.map((item, index) => {
+                                    const isObject = item !== null && typeof item === "object";
 
-                                        const title = isObject
-                                            ? item.name ||
-                                              item.title ||
-                                              `Possible Explanation ${
-                                                  index + 1
-                                              }`
-                                            : String(item);
+                                    const title = isObject
+                                        ? item.name ||
+                                        item.title ||
+                                        `Possible Explanation ${index + 1}`
+                                        : String(item);
 
-                                        const details =
-                                            isObject
-                                                ? Object.entries(
-                                                      item
-                                                  ).filter(
-                                                      ([key]) =>
-                                                          key !==
-                                                              "name" &&
-                                                          key !==
-                                                              "title"
-                                                  )
-                                                : [];
+                                    const details = isObject
+                                        ? Object.entries(item).filter(
+                                            ([key]) => key !== "name" && key !== "title",
+                                        )
+                                        : [];
 
-                                        const isOpen =
-                                            openIndex === index;
+                                    const isOpen = openIndex === index;
 
-                                        return (
-                                            <div
-                                                className={`explanation-card ${
-                                                    isOpen
-                                                        ? "open"
-                                                        : ""
-                                                }`}
-                                                key={index}
+                                    return (
+                                        <div
+                                            className={`explanation-card ${isOpen ? "open" : ""}`}
+                                            key={index}
+                                        >
+                                            <button
+                                                type="button"
+                                                className="explanation-header"
+                                                onClick={() => setOpenIndex(isOpen ? -1 : index)}
                                             >
-                                                <button
-                                                    type="button"
-                                                    className="explanation-header"
-                                                    onClick={() =>
-                                                        setOpenIndex(
-                                                            isOpen
-                                                                ? -1
-                                                                : index
-                                                        )
-                                                    }
-                                                >
-                                                    <div className="explanation-title">
-                                                        <div className="explanation-icon">
-                                                            <FontAwesomeIcon
-                                                                icon={
-                                                                    faFileMedical
-                                                                }
-                                                            />
-                                                        </div>
-
-                                                        <div>
-                                                            <span>
-                                                                Explanation{" "}
-                                                                {index +
-                                                                    1}
-                                                            </span>
-
-                                                            <h3>
-                                                                {title}
-                                                            </h3>
-                                                        </div>
+                                                <div className="explanation-title">
+                                                    <div className="explanation-icon">
+                                                        <FontAwesomeIcon icon={faFileMedical} />
                                                     </div>
 
-                                                    <div className="explanation-toggle">
-                                                        <FontAwesomeIcon
-                                                            icon={
-                                                                isOpen
-                                                                    ? faChevronUp
-                                                                    : faChevronDown
-                                                            }
-                                                        />
+                                                    <div>
+                                                        <span>Explanation {index + 1}</span>
+
+                                                        <h3>{title}</h3>
                                                     </div>
-                                                </button>
+                                                </div>
 
-                                                {isOpen && (
-                                                    <div className="explanation-body">
-                                                        {isObject &&
-                                                        details.length >
-                                                            0 ? (
-                                                            details.map(
-                                                                ([
-                                                                    key,
-                                                                    value
-                                                                ]) => (
-                                                                    <div
-                                                                        className="detail-section"
-                                                                        key={
-                                                                            key
-                                                                        }
-                                                                    >
-                                                                        <h4>
-                                                                            {formatLabel(
-                                                                                key
-                                                                            )}
-                                                                        </h4>
+                                                <div className="explanation-toggle">
+                                                    <FontAwesomeIcon
+                                                        icon={isOpen ? faChevronUp : faChevronDown}
+                                                    />
+                                                </div>
+                                            </button>
 
-                                                                        <div className="detail-section-content">
-                                                                            {renderValue(
-                                                                                value
-                                                                            )}
-                                                                        </div>
-                                                                    </div>
-                                                                )
-                                                            )
-                                                        ) : (
-                                                            <p className="simple-explanation">
-                                                                This is
-                                                                one of
-                                                                the
-                                                                possible
-                                                                explanations
-                                                                identified
-                                                                from the
-                                                                information
-                                                                provided.
-                                                            </p>
-                                                        )}
+                                            {isOpen && (
+                                                <div className="explanation-body">
+                                                    {isObject && details.length > 0 ? (
+                                                        details.map(([key, value]) => (
+                                                            <div className="detail-section" key={key}>
+                                                                <h4>{formatLabel(key)}</h4>
 
-                                                        <div className="explanation-note">
-                                                            <FontAwesomeIcon
-                                                                icon={
-                                                                    faCircleInfo
-                                                                }
-                                                            />
+                                                                <div className="detail-section-content">
+                                                                    {renderValue(value)}
+                                                                </div>
+                                                            </div>
+                                                        ))
+                                                    ) : (
+                                                        <p className="simple-explanation">
+                                                            This is one of the possible explanations
+                                                            identified from the information provided.
+                                                        </p>
+                                                    )}
 
-                                                            <span>
-                                                                This
-                                                                information
-                                                                is for
-                                                                guidance
-                                                                only and
-                                                                does not
-                                                                confirm
-                                                                that this
-                                                                condition
-                                                                is
-                                                                present.
-                                                            </span>
-                                                        </div>
+                                                    <div className="explanation-note">
+                                                        <FontAwesomeIcon icon={faCircleInfo} />
+
+                                                        <span>
+                                                            This information is for guidance only and does not
+                                                            confirm that this condition is present.
+                                                        </span>
                                                     </div>
-                                                )}
-                                            </div>
-                                        );
-                                    }
-                                )}
+                                                </div>
+                                            )}
+                                        </div>
+                                    );
+                                })}
                             </div>
                         )}
 
                         <div className="details-safety-box">
                             <div className="details-safety-icon">
-                                <FontAwesomeIcon
-                                    icon={
-                                        faTriangleExclamation
-                                    }
-                                />
+                                <FontAwesomeIcon icon={faTriangleExclamation} />
                             </div>
 
                             <div>
-                                <h4>
-                                    When to seek medical help
-                                </h4>
+                                <h4>When to seek medical help</h4>
 
                                 <p>
-                                    If your symptoms become
-                                    severe, suddenly worsen,
-                                    or you experience an
-                                    emergency warning sign,
-                                    seek professional medical
-                                    care immediately.
+                                    If your symptoms become severe, suddenly worsen, or you
+                                    experience an emergency warning sign, seek professional
+                                    medical care immediately.
                                 </p>
                             </div>
                         </div>
@@ -531,27 +361,18 @@ function AnalysisDetails() {
                                 className="details-back-btn"
                                 onClick={goBack}
                             >
-                                <FontAwesomeIcon
-                                    icon={faArrowLeftLong}
-                                />
-
+                                <FontAwesomeIcon icon={faArrowLeftLong} />
                                 Back to Analysis
                             </button>
 
                             <div className="details-action-note">
-                                <FontAwesomeIcon
-                                    icon={faStethoscope}
-                                />
+                                <FontAwesomeIcon icon={faStethoscope} />
 
-                                <span>
-                                    AI-generated information
-                                    for educational purposes
-                                </span>
+                                <span>AI-generated information for educational purposes</span>
                             </div>
                         </div>
                     </div>
                 </div>
-
             </main>
         </div>
     );

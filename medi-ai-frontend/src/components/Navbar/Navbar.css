@@ -163,7 +163,9 @@
 }
 
 .dropdown-menu button:hover {
-    background: #f5f5f5;
+    background: #f1f6ff;
+    color: #1769ff;
+    border-radius: 5px;
 }
 
 @media (max-width: 1100px) {

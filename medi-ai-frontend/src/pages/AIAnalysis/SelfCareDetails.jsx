@@ -11,6 +11,7 @@ import {
     faChevronUp
 } from "@fortawesome/free-solid-svg-icons";
 import "./SelfCareDetails.css";
+import API_URL from "../../config";
 
 function SelfCareDetails() {
     const urlParams = new URLSearchParams(window.location.search);
@@ -38,7 +39,7 @@ function SelfCareDetails() {
                 }
 
                 const response = await fetch(
-                    `http://127.0.0.1:8000/api/analysis/?id=${consultationId}`,
+                    `${API_URL}/api/analysis/?id=${consultationId}`,
                     {
                         method: "GET",
                         headers: {

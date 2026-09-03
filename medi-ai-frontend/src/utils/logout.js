@@ -1,8 +1,10 @@
+import API_URL from "../config";
+
 const logout = async () => {
     const refresh = localStorage.getItem("refresh_token");
 
     try {
-        await fetch("http://localhost:8000/api/logout/", {
+        await fetch(`${API_URL}/api/logout/`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

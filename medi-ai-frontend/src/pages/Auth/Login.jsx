@@ -1,10 +1,9 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, } from "react-router-dom";
 import "./Auth.css";
+import API_URL from "../../config";
 
 function Login() {
-
-  const navigate = useNavigate();
 
   const [loginEmail, setLoginEmail] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
@@ -45,7 +44,7 @@ function Login() {
     setLoading(true);
 
     try {
-      const response = await fetch("http://127.0.0.1:8000/api/login/", {
+      const response = await fetch(`${API_URL}/api/login/`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -70,7 +69,7 @@ function Login() {
 
       localStorage.setItem("refresh_token", data.refresh);
 
-      window.location.href = "http://localhost:3000/new-consultation/"
+      window.location.href = "/new-consultation/"
       // navigate("/dashboard");
     } catch (error) {
       console.error("Login error:", error);

@@ -1,18 +1,24 @@
 import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-    faArrowLeftLong,
     faShieldHalved,
     faTriangleExclamation,
     faFileMedical,
     faHandHoldingHeart,
     faCircleInfo,
-    faBookmark,
     faDownload,
     faCircleCheck,
-    faChevronRight
+    faChevronRight,
+    faStar as faStarSolid,
 } from "@fortawesome/free-solid-svg-icons";
+
+import {
+    faStar as faStarRegular,
+} from "@fortawesome/free-regular-svg-icons";
 import "./AIAnalysis.css";
+import { downloadReport } from "../../utils/downloadReport";
+import { updateFavourite } from "../../utils/updateFavourite";
+import API_URL from "../../config";
 
 function AIAnalysis() {
     const urlParams = new URLSearchParams(window.location.search);
@@ -21,6 +27,9 @@ function AIAnalysis() {
     const [analysis, setAnalysis] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
+    const [isDownloading, setIsDownloading] = useState(false);
+    const [isFavourite, setIsFavourite] = useState(false);
+    const [favouriteLoading, setFavouriteLoading] = useState(false);
 
     const extractAnalysis = (data) => {
         if (!data) {
@@ -35,17 +44,11 @@ function AIAnalysis() {
             return data.data.response;
         }
 
-        if (
-            data.response &&
-            typeof data.response === "object"
-        ) {
+        if (data.response && typeof data.response === "object") {
             return data.response;
         }
 
-        if (
-            data.analysis &&
-            typeof data.analysis === "object"
-        ) {
+        if (data.analysis && typeof data.analysis === "object") {
             return data.analysis;
         }
 
@@ -94,15 +97,14 @@ function AIAnalysis() {
                     return;
                 }
 
-                const apiUrl =
-                    `http://127.0.0.1:8000/api/analysis/?id=${consultationId}`;
+                const apiUrl = `${API_URL}/api/analysis/?id=${consultationId}`;
 
                 let response = await fetch(apiUrl, {
                     method: "GET",
                     headers: {
                         "Content-Type": "application/json",
-                        Authorization: `Bearer ${token}`
-                    }
+                        Authorization: `Bearer ${token}`,
+                    },
                 });
 
                 let data;
@@ -124,8 +126,8 @@ function AIAnalysis() {
                         method: "POST",
                         headers: {
                             "Content-Type": "application/json",
-                            Authorization: `Bearer ${token}`
-                        }
+                            Authorization: `Bearer ${token}`,
+                        },
                     });
 
                     try {
@@ -142,64 +144,45 @@ function AIAnalysis() {
 
                     if (!response.ok) {
                         throw new Error(
-                            data.detail ||
-                            data.error ||
-                            "Failed to generate AI analysis."
+                            data.detail || data.error || "Failed to generate AI analysis.",
                         );
                     }
 
-                    const generatedAnalysis =
-                        extractAnalysis(data);
+                    const generatedAnalysis = extractAnalysis(data);
 
                     if (generatedAnalysis) {
                         setAnalysis(generatedAnalysis);
+                        setIsFavourite(data.favourite);
                         return;
                     }
 
-                    console.error(
-                        "POST Analysis Response:",
-                        data
-                    );
+                    console.error("POST Analysis Response:", data);
 
-                    throw new Error(
-                        "AI analysis response is empty."
-                    );
+                    throw new Error("AI analysis response is empty.");
                 }
 
                 if (!response.ok) {
                     throw new Error(
-                        data.detail ||
-                        data.error ||
-                        "Failed to load AI analysis."
+                        data.detail || data.error || "Failed to load AI analysis.",
                     );
                 }
 
-                const savedAnalysis =
-                    extractAnalysis(data);
+                const savedAnalysis = extractAnalysis(data);
 
                 if (savedAnalysis) {
                     setAnalysis(savedAnalysis);
+                    setIsFavourite(data.favourite);
+                    console.log(data.favourite);
                     return;
                 }
 
-                console.error(
-                    "GET Analysis Response:",
-                    data
-                );
+                console.error("GET Analysis Response:", data);
 
-                throw new Error(
-                    "AI analysis data is empty."
-                );
+                throw new Error("AI analysis data is empty.");
             } catch (err) {
-                console.error(
-                    "AI Analysis Error:",
-                    err
-                );
+                console.error("AI Analysis Error:", err);
 
-                setError(
-                    err.message ||
-                    "Failed to load AI analysis."
-                );
+                setError(err.message || "Failed to load AI analysis.");
             } finally {
                 setLoading(false);
             }
@@ -207,6 +190,39 @@ function AIAnalysis() {
 
         loadAnalysis();
     }, [consultationId]);
+
+    const handleDownloadPDF = async () => {
+        if (isDownloading) return;
+
+        setIsDownloading(true);
+
+        try {
+            await downloadReport(consultationId);
+        } catch (error) {
+            console.error("PDF download error:", error);
+            alert(error.message || "Failed to download report.");
+        } finally {
+            setIsDownloading(false);
+        }
+    };
+
+    const handleFavourite = async () => {
+        if (favouriteLoading) return;
+
+        const newFavourite = !isFavourite;
+
+        setFavouriteLoading(true);
+
+        try {
+            await updateFavourite(consultationId, newFavourite);
+            setIsFavourite(newFavourite);
+        } catch (error) {
+            console.error("Favourite update error:", error);
+            alert(error.message || "Failed to update favourite.");
+        } finally {
+            setFavouriteLoading(false);
+        }
+    };
 
     if (loading) {
         return (
@@ -216,9 +232,7 @@ function AIAnalysis() {
                         <div className="analysis-card">
                             <div className="analysis-loading">
                                 <div className="analysis-loader"></div>
-                                <p>
-                                    Loading your AI analysis...
-                                </p>
+                                <p>Loading your AI analysis...</p>
                             </div>
                         </div>
                     </div>
@@ -234,30 +248,9 @@ function AIAnalysis() {
                     <div className="analysis-content">
                         <div className="analysis-card">
                             <div className="analysis-error">
-                                <FontAwesomeIcon
-                                    icon={
-                                        faTriangleExclamation
-                                    }
-                                />
-                                <h3>
-                                    Unable to load analysis
-                                </h3>
-                                <p>
-                                    {error}
-                                </p>
-                                <button
-                                    className="analysis-back-btn"
-                                    onClick={() =>
-                                        window.history.back()
-                                    }
-                                >
-                                    <FontAwesomeIcon
-                                        icon={
-                                            faArrowLeftLong
-                                        }
-                                    />
-                                    Back
-                                </button>
+                                <FontAwesomeIcon icon={faTriangleExclamation} />
+                                <h3>Unable to load analysis</h3>
+                                <p>{error}</p>
                             </div>
                         </div>
                     </div>
@@ -266,44 +259,29 @@ function AIAnalysis() {
         );
     }
 
-    const triage =
-        analysis?.triage || {};
+    const triage = analysis?.triage || {};
 
-    const possibleExplanations =
-        Array.isArray(
-            analysis?.possible_explanations
-        )
-            ? analysis.possible_explanations
-            : [];
+    const possibleExplanations = Array.isArray(analysis?.possible_explanations)
+        ? analysis.possible_explanations
+        : [];
 
-    const warningData =
-        analysis?.warning_signs;
+    const warningData = analysis?.warning_signs;
 
-    const warningSigns =
-        Array.isArray(warningData)
-            ? warningData
-            : Array.isArray(
-                  warningData?.items
-              )
+    const warningSigns = Array.isArray(warningData)
+        ? warningData
+        : Array.isArray(warningData?.items)
             ? warningData.items
             : [];
 
-    const selfCareData =
-        analysis?.self_care;
+    const selfCareData = analysis?.self_care;
 
-    const selfCare =
-        Array.isArray(selfCareData)
-            ? selfCareData
-            : Array.isArray(
-                  selfCareData?.items
-              )
+    const selfCare = Array.isArray(selfCareData)
+        ? selfCareData
+        : Array.isArray(selfCareData?.items)
             ? selfCareData.items
             : [];
 
-    const triageTitle =
-        triage?.title ||
-        triage?.level ||
-        "Not specified";
+    const triageTitle = triage?.title || triage?.level || "Not specified";
 
     const triageDescription =
         triage?.description ||
@@ -315,23 +293,13 @@ function AIAnalysis() {
 
     return (
         <div className="analysis-page">
-
             <main className="analysis-main">
                 <div className="analysis-content">
                     <div className="analysis-card">
                         <div className="analysis-header">
                             <div className="analysis-title-box">
                                 <h2>
-                                    <FontAwesomeIcon
-                                        icon={
-                                            faArrowLeftLong
-                                        }
-                                        onClick={() =>
-                                            window.history.back()
-                                        }
-                                    />
-                                    AI Analysis &
-                                    Recommendations
+                                    AI Analysis & Recommendations
                                 </h2>
 
                                 <p>
@@ -341,110 +309,65 @@ function AIAnalysis() {
                             </div>
 
                             <div className="analysis-secure">
-                                <FontAwesomeIcon
-                                    icon={
-                                        faShieldHalved
-                                    }
-                                />
-                                <span>
-                                    Secure & Private
-                                </span>
+                                <FontAwesomeIcon icon={faShieldHalved} />
+                                <span>Secure & Private</span>
                             </div>
                         </div>
 
                         <div className="analysis-steps">
                             <div className="analysis-step completed">
                                 <div className="analysis-step-number">
-                                    <FontAwesomeIcon
-                                        icon={
-                                            faCircleCheck
-                                        }
-                                    />
+                                    <FontAwesomeIcon icon={faCircleCheck} />
                                 </div>
-                                <span>
-                                    Symptoms
-                                </span>
+                                <span>Symptoms</span>
                             </div>
 
                             <div className="analysis-step-line completed-line"></div>
 
                             <div className="analysis-step completed">
                                 <div className="analysis-step-number">
-                                    <FontAwesomeIcon
-                                        icon={
-                                            faCircleCheck
-                                        }
-                                    />
+                                    <FontAwesomeIcon icon={faCircleCheck} />
                                 </div>
-                                <span>
-                                    Details
-                                </span>
+                                <span>Details</span>
                             </div>
 
                             <div className="analysis-step-line completed-line"></div>
 
                             <div className="analysis-step completed">
                                 <div className="analysis-step-number">
-                                    <FontAwesomeIcon
-                                        icon={
-                                            faCircleCheck
-                                        }
-                                    />
+                                    <FontAwesomeIcon icon={faCircleCheck} />
                                 </div>
-                                <span>
-                                    Review
-                                </span>
+                                <span>Review</span>
                             </div>
 
                             <div className="analysis-step-line active-line"></div>
 
                             <div className="analysis-step active">
-                                <div className="analysis-step-number">
-                                    4
-                                </div>
-                                <span>
-                                    AI Analysis
-                                </span>
+                                <div className="analysis-step-number">4</div>
+                                <span>AI Analysis</span>
                             </div>
                         </div>
 
                         <div className="triage-box">
                             <div className="triage-icon">
-                                <FontAwesomeIcon
-                                    icon={
-                                        faTriangleExclamation
-                                    }
-                                />
+                                <FontAwesomeIcon icon={faTriangleExclamation} />
                             </div>
 
                             <div className="triage-content">
                                 <h3>
                                     Triage Level:
-                                    <span>
-                                        {" "}
-                                        {triageTitle}
-                                    </span>
+                                    <span> {triageTitle}</span>
                                 </h3>
 
-                                <p>
-                                    {triageDescription}
-                                </p>
+                                <p>{triageDescription}</p>
                             </div>
 
                             <button
                                 className="triage-info-btn"
-                                onClick={() =>
-                                    alert(
-                                        triageReason
-                                    )
-                                }
+                                onClick={() => alert(triageReason)}
                             >
                                 Why this level?
-                                <FontAwesomeIcon
-                                    icon={
-                                        faCircleInfo
-                                    }
-                                />
+                                <FontAwesomeIcon icon={faCircleInfo} />
                             </button>
                         </div>
 
@@ -452,66 +375,37 @@ function AIAnalysis() {
                             <div className="result-card">
                                 <div className="result-card-header">
                                     <div className="result-icon purple">
-                                        <FontAwesomeIcon
-                                            icon={
-                                                faFileMedical
-                                            }
-                                        />
+                                        <FontAwesomeIcon icon={faFileMedical} />
                                     </div>
 
-                                    <h3>
-                                        Possible Explanations
-                                    </h3>
+                                    <h3>Possible Explanations</h3>
                                 </div>
 
                                 <ul className="result-list">
-                                    {possibleExplanations.length >
-                                    0 ? (
+                                    {possibleExplanations.length > 0 ? (
                                         possibleExplanations
                                             .slice(0, 4)
-                                            .map(
-                                                (
-                                                    item,
-                                                    index
-                                                ) => (
-                                                    <li
-                                                        key={
-                                                            index
-                                                        }
-                                                    >
-                                                        {typeof item ===
-                                                        "object"
-                                                            ? item.name ||
-                                                              item.title ||
-                                                              "Possible explanation"
-                                                            : item}
-                                                    </li>
-                                                )
-                                            )
+                                            .map((item, index) => (
+                                                <li key={index}>
+                                                    {typeof item === "object"
+                                                        ? item.name || item.title || "Possible explanation"
+                                                        : item}
+                                                </li>
+                                            ))
                                     ) : (
-                                        <li>
-                                            No possible
-                                            explanations
-                                            available.
-                                        </li>
+                                        <li>No possible explanations available.</li>
                                     )}
                                 </ul>
 
-                                {possibleExplanations.length >
-                                    0 && (
+                                {possibleExplanations.length > 0 && (
                                     <button
                                         className="result-link"
                                         onClick={() =>
-                                            window.location.href =
-                                                `/new-consultation/analysis/details?id=${consultationId}`
+                                            (window.location.href = `/new-consultation/analysis/details?id=${consultationId}`)
                                         }
                                     >
                                         View details
-                                        <FontAwesomeIcon
-                                            icon={
-                                                faChevronRight
-                                            }
-                                        />
+                                        <FontAwesomeIcon icon={faChevronRight} />
                                     </button>
                                 )}
                             </div>
@@ -519,67 +413,40 @@ function AIAnalysis() {
                             <div className="result-card">
                                 <div className="result-card-header">
                                     <div className="result-icon orange">
-                                        <FontAwesomeIcon
-                                            icon={
-                                                faTriangleExclamation
-                                            }
-                                        />
+                                        <FontAwesomeIcon icon={faTriangleExclamation} />
                                     </div>
 
-                                    <h3>
-                                        Warning Signs
-                                    </h3>
+                                    <h3>Warning Signs</h3>
                                 </div>
 
                                 <ul className="result-list">
-                                    {warningSigns.length >
-                                    0 ? (
+                                    {warningSigns.length > 0 ? (
                                         warningSigns
                                             .slice(0, 4)
-                                            .map(
-                                                (
-                                                    warning,
-                                                    index
-                                                ) => (
-                                                    <li
-                                                        key={
-                                                            index
-                                                        }
-                                                    >
-                                                        {typeof warning ===
-                                                        "object"
-                                                            ? warning.name ||
-                                                              warning.title ||
-                                                              warning.warning ||
-                                                              "Warning sign"
-                                                            : warning}
-                                                    </li>
-                                                )
-                                            )
+                                            .map((warning, index) => (
+                                                <li key={index}>
+                                                    {typeof warning === "object"
+                                                        ? warning.name ||
+                                                        warning.title ||
+                                                        warning.warning ||
+                                                        "Warning sign"
+                                                        : warning}
+                                                </li>
+                                            ))
                                     ) : (
-                                        <li>
-                                            No warning
-                                            signs
-                                            available.
-                                        </li>
+                                        <li>No warning signs available.</li>
                                     )}
                                 </ul>
 
-                                {warningSigns.length >
-                                    0 && (
+                                {warningSigns.length > 0 && (
                                     <button
                                         className="result-link"
                                         onClick={() =>
-                                            window.location.href =
-                                                `/new-consultation/analysis/warnings?id=${consultationId}`
+                                            (window.location.href = `/new-consultation/analysis/warnings?id=${consultationId}`)
                                         }
                                     >
                                         View details
-                                        <FontAwesomeIcon
-                                            icon={
-                                                faChevronRight
-                                            }
-                                        />
+                                        <FontAwesomeIcon icon={faChevronRight} />
                                     </button>
                                 )}
                             </div>
@@ -587,68 +454,40 @@ function AIAnalysis() {
                             <div className="result-card">
                                 <div className="result-card-header">
                                     <div className="result-icon green">
-                                        <FontAwesomeIcon
-                                            icon={
-                                                faHandHoldingHeart
-                                            }
-                                        />
+                                        <FontAwesomeIcon icon={faHandHoldingHeart} />
                                     </div>
 
-                                    <h3>
-                                        Self-Care
-                                        Suggestions
-                                    </h3>
+                                    <h3>Self-Care Suggestions</h3>
                                 </div>
 
                                 <ul className="result-list">
-                                    {selfCare.length >
-                                    0 ? (
+                                    {selfCare.length > 0 ? (
                                         selfCare
                                             .slice(0, 4)
-                                            .map(
-                                                (
-                                                    item,
-                                                    index
-                                                ) => (
-                                                    <li
-                                                        key={
-                                                            index
-                                                        }
-                                                    >
-                                                        {typeof item ===
-                                                        "object"
-                                                            ? item.name ||
-                                                              item.title ||
-                                                              item.action ||
-                                                              "Self-care recommendation"
-                                                            : item}
-                                                    </li>
-                                                )
-                                            )
+                                            .map((item, index) => (
+                                                <li key={index}>
+                                                    {typeof item === "object"
+                                                        ? item.name ||
+                                                        item.title ||
+                                                        item.action ||
+                                                        "Self-care recommendation"
+                                                        : item}
+                                                </li>
+                                            ))
                                     ) : (
-                                        <li>
-                                            No self-care
-                                            suggestions
-                                            available.
-                                        </li>
+                                        <li>No self-care suggestions available.</li>
                                     )}
                                 </ul>
 
-                                {selfCare.length >
-                                    0 && (
+                                {selfCare.length > 0 && (
                                     <button
                                         className="result-link"
                                         onClick={() =>
-                                            window.location.href =
-                                                `/new-consultation/analysis/self-care?id=${consultationId}`
+                                            (window.location.href = `/new-consultation/analysis/self-care?id=${consultationId}`)
                                         }
                                     >
                                         View details
-                                        <FontAwesomeIcon
-                                            icon={
-                                                faChevronRight
-                                            }
-                                        />
+                                        <FontAwesomeIcon icon={faChevronRight} />
                                     </button>
                                 )}
                             </div>
@@ -656,17 +495,11 @@ function AIAnalysis() {
 
                         <div className="analysis-disclaimer">
                             <div className="disclaimer-icon">
-                                <FontAwesomeIcon
-                                    icon={
-                                        faShieldHalved
-                                    }
-                                />
+                                <FontAwesomeIcon icon={faShieldHalved} />
                             </div>
 
                             <div>
-                                <h4>
-                                    Disclaimer
-                                </h4>
+                                <h4>Disclaimer</h4>
 
                                 <p>
                                     {analysis?.disclaimer ||
@@ -677,17 +510,11 @@ function AIAnalysis() {
 
                         <div className="analysis-important">
                             <div className="important-icon">
-                                <FontAwesomeIcon
-                                    icon={
-                                        faCircleInfo
-                                    }
-                                />
+                                <FontAwesomeIcon icon={faCircleInfo} />
                             </div>
 
                             <div>
-                                <h4>
-                                    Important
-                                </h4>
+                                <h4>Important</h4>
 
                                 <p>
                                     {analysis?.important ||
@@ -697,44 +524,29 @@ function AIAnalysis() {
                         </div>
 
                         <div className="analysis-actions">
-                                <button
-                                    className="analysis-save-btn"
-                                    onClick={() =>
-                                        alert(
-                                            "Save Report feature will be added next."
-                                        )
-                                    }
-                                >
-                                    <FontAwesomeIcon
-                                        icon={
-                                            faBookmark
-                                        }
-                                    />
-                                    Save Report
-                                </button>
+                            <button
+                                className="analysis-save-btn"
+                                onClick={handleFavourite}
+                                disabled={favouriteLoading}
+                            >
+                                <FontAwesomeIcon
+                                    icon={isFavourite ? faStarSolid : faStarRegular}
+                                />
+                                {isFavourite ? "Unsave Report" : "Save Report"}
+                            </button>
 
                             <div className="analysis-action-right">
-
                                 <button
                                     className="analysis-download-btn"
-                                    onClick={() =>
-                                        alert(
-                                            "Download PDF feature will be added next."
-                                        )
-                                    }
-                                >
-                                    <FontAwesomeIcon
-                                        icon={
-                                            faDownload
-                                        }
-                                    />
-                                    Download PDF
+                                    onClick={handleDownloadPDF}
+                                    disabled={isDownloading}>
+                                    <FontAwesomeIcon icon={faDownload} />
+                                    {isDownloading ? "Generating PDF..." : "Download PDF"}
                                 </button>
                             </div>
                         </div>
                     </div>
                 </div>
-
             </main>
         </div>
     );

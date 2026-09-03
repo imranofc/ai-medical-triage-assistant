@@ -6,6 +6,7 @@ import Loader from "../../components/Loader/Loader.jsx";
 import checkAccessForConsultationPage from "../../utils/checkAccessForConsultationPage.js";
 import useAuth from "../../context/useAuth.js";
 import { useNavigate } from "react-router-dom";
+import API_URL from "../../config";
 
 function NewConsultation() {
     const navigate = useNavigate();
@@ -102,8 +103,8 @@ function NewConsultation() {
 
         try {
             const url = id
-                ? `http://127.0.0.1:8000/api/consultation/?id=${id}`
-                : "http://127.0.0.1:8000/api/consultation/";
+                ? `${API_URL}/api/consultation/?id=${id}`
+                : `${API_URL}/api/consultation/`;
 
             const response = await fetch(url, {
                 method: "POST",
@@ -142,7 +143,6 @@ function NewConsultation() {
                         <div className="nc-header-p1">
                             <div className="nc-header-left">
                                 <h2>
-                                    <FontAwesomeIcon icon={faArrowLeftLong} />
                                     New Consultation
                                 </h2>
                             </div>

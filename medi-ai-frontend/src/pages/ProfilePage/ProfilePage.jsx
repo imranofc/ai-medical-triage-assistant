@@ -17,6 +17,7 @@ import { useNavigate } from "react-router-dom";
 import useAuth from "../../context/useAuth.js";
 import logout from "../../utils/logout.js";
 import Loader from "../../components/Loader/Loader.jsx";
+import API_URL from "../../config";
 
 function ProfilePage() {
     const navigate = useNavigate();
@@ -74,7 +75,7 @@ function ProfilePage() {
         try {
             const token = localStorage.getItem("access_token");
             const response = await fetch(
-                "http://127.0.0.1:8000/api/update-profile/",
+                `${API_URL}/api/update-profile/`,
                 {
                     method: "PATCH",
                     headers: {
@@ -132,7 +133,7 @@ function ProfilePage() {
             const token = localStorage.getItem("access_token");
 
             const response = await fetch(
-                "http://127.0.0.1:8000/api/update-profile/",
+                `${API_URL}/api/update-profile/`,
                 {
                     method: "PATCH",
                     headers: {

@@ -223,3 +223,8 @@ class UpdateProfileSerializer(serializers.ModelSerializer):
 
         instance.save()
         return instance
+
+class FavouriteSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Consultation
+        fields = ['favourite']

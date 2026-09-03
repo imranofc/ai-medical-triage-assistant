@@ -1,3 +1,5 @@
+import API_URL from "../config";
+
 async function checkAccessForDetailPage() {
     const urlParams = new URLSearchParams(window.location.search);
     const id = urlParams.get("id");
@@ -14,7 +16,7 @@ async function checkAccessForDetailPage() {
     }
 
     const response = await fetch(
-        `http://127.0.0.1:8000/api/new-consultation/?id=${id}`,
+        `${API_URL}/api/new-consultation/?id=${id}`,
         {
             method: "GET",
             headers: {

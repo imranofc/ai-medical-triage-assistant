@@ -9,10 +9,17 @@ import {
     faEye,
     faDownload,
     faClock,
-    faStar,
+    faStar as faStarSolid,
 } from "@fortawesome/free-solid-svg-icons";
+
+import {
+    faStar as faStarRegular,
+} from "@fortawesome/free-regular-svg-icons";
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
+import { downloadReport } from "../../utils/downloadReport";
+import { updateFavourite } from "../../utils/updateFavourite";
+import API_URL from "../../config";
 
 function History() {
     const [searchParams, setSearchParams] = useSearchParams();
@@ -31,6 +38,8 @@ function History() {
     const [totalPages, setTotalPages] = useState(1);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
+    const [downloadingId, setDownloadingId] = useState(null);
+    const [favouriteLoadingId, setFavouriteLoadingId] = useState(null);
 
     useEffect(() => {
         const fetchHistory = async () => {
@@ -55,7 +64,7 @@ function History() {
                 }
 
                 const response = await fetch(
-                    `http://127.0.0.1:8000/api/history/?${params.toString()}`,
+                    `${API_URL}/api/history/?${params.toString()}`,
                     {
                         method: "GET",
                         headers: {
@@ -158,8 +167,47 @@ function History() {
         }
     };
 
-    const downloadReport = (item) => {
-        window.location.href = `/new-consultation/analysis?id=${item.id}`;
+    const handleDownloadReport = async (consultationId) => {
+        if (downloadingId !== null) return;
+
+        setDownloadingId(consultationId);
+
+        try {
+            await downloadReport(consultationId);
+        } catch (error) {
+            console.error("PDF download error:", error);
+            alert(error.message || "Failed to download report.");
+        } finally {
+            setDownloadingId(null);
+        }
+    };
+    const handleFavourite = async (consultationId, currentFavourite) => {
+        if (favouriteLoadingId !== null) return;
+
+        setFavouriteLoadingId(consultationId);
+
+        try {
+            const data = await updateFavourite(
+                consultationId,
+                !currentFavourite
+            );
+
+            setHistory((prevHistory) =>
+                prevHistory.map((item) =>
+                    item.id === consultationId
+                        ? {
+                            ...item,
+                            favourite: data.favourite
+                        }
+                        : item
+                )
+            );
+        } catch (error) {
+            console.error("Favourite update error:", error);
+            alert(error.message || "Failed to update favourite.");
+        } finally {
+            setFavouriteLoadingId(null);
+        }
     };
 
     if (loading) {
@@ -280,7 +328,7 @@ function History() {
                             onClick={() => changeFilter("favourite")}
                         >
                             <div className="history-stat-icon">
-                                <FontAwesomeIcon icon={faStar} />
+                                <FontAwesomeIcon icon={faStarSolid} />
                             </div>
 
                             <div>
@@ -367,18 +415,25 @@ function History() {
                                             <button
                                                 type="button"
                                                 className="download-btn"
-                                                onClick={() => downloadReport(item)}
+                                                onClick={() => handleDownloadReport(item.id)}
+                                                disabled={downloadingId === item.id}
                                             >
                                                 <FontAwesomeIcon icon={faDownload} />
                                             </button>
                                         )}
 
-                                        <span
-                                            className={`history-favourite ${item.favourite ? "active" : ""
-                                                }`}
+                                        <button
+                                            type="button"
+                                            className={`history-favourite ${item.favourite ? "active" : ""}`}
+                                            onClick={() =>
+                                                handleFavourite(item.id, item.favourite)
+                                            }
+                                            disabled={favouriteLoadingId === item.id}
                                         >
-                                            <FontAwesomeIcon icon={faStar} />
-                                        </span>
+                                            <FontAwesomeIcon
+                                                icon={item.favourite ? faStarSolid : faStarRegular}
+                                            />
+                                        </button>
                                     </div>
                                 </div>
                             ))

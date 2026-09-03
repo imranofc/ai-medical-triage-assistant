@@ -16,4 +16,6 @@ urlpatterns = [
     path("api/logout/", logout, name="logout"),
     path('api/history/', history, name="history"),
     path('api/update-profile/', update_profile, name="update_profile"),
+    path("api/download-report/", download_report, name="download-report"),
+    path("api/update-favourite/", update_favourite, name="update-favourite"),
 ]

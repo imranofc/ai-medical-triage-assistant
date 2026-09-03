@@ -10,6 +10,7 @@ import {
     faChevronUp
 } from "@fortawesome/free-solid-svg-icons";
 import "./WarningDetails.css";
+import API_URL from "../../config";
 
 function WarningDetails() {
     const urlParams = new URLSearchParams(window.location.search);
@@ -122,7 +123,7 @@ function WarningDetails() {
                 }
 
                 const response = await fetch(
-                    `http://127.0.0.1:8000/api/analysis/?id=${consultationId}`,
+                    `${API_URL}/api/analysis/?id=${consultationId}`,
                     {
                         method: "GET",
                         headers: {

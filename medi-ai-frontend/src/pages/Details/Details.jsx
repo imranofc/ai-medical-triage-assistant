@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeftLong, faCalendarDays, faChevronDown, faShieldHalved } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useState } from "react";
 import Loader from "../../components/Loader/Loader";
+import API_URL from "../../config";
 
 function Details() {
     const [age, setAge] = useState("");
@@ -111,7 +112,7 @@ function Details() {
         try {
             setLoading(true);
             const token = localStorage.getItem("access_token");
-            const response = await fetch("http://127.0.0.1:8000/api/petientdetail/", {
+            const response = await fetch(`${API_URL}/api/patientdetail/`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

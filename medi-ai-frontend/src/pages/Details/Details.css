@@ -56,6 +56,7 @@
     border: 1px solid #D6E5FF;
     color: #1769FF;
     flex-shrink: 0;
+    margin-left: 30px;
 }
 .secure-badge p {
     margin: 0;
