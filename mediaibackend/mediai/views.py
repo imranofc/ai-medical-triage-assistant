@@ -8,7 +8,6 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from django.db.models import Q
 from .serializers import UpdateProfileSerializer
 from io import BytesIO
-from reportlab.pdfgen import canvas
 from django.http import FileResponse
 
 from rest_framework.decorators import (

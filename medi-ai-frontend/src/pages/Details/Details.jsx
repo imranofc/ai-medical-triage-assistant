@@ -112,7 +112,7 @@ function Details() {
         try {
             setLoading(true);
             const token = localStorage.getItem("access_token");
-            const response = await fetch(`${API_URL}/api/patientdetail/`, {
+            const response = await fetch(`${API_URL}/api/petientdetail/`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

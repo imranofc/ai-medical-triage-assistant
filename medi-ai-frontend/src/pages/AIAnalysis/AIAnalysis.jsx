@@ -172,7 +172,6 @@ function AIAnalysis() {
                 if (savedAnalysis) {
                     setAnalysis(savedAnalysis);
                     setIsFavourite(data.favourite);
-                    console.log(data.favourite);
                     return;
                 }
 
