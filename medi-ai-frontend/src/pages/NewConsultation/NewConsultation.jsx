@@ -122,9 +122,6 @@ function NewConsultation() {
 
             const data = await response.json();
 
-            console.log("STATUS:", response.status);
-            console.log("DATA:", data);
-
             if (response.ok) {
                 window.location.href = `/new-consultation/details?id=${data.id}`;
             }
@@ -158,22 +155,22 @@ function NewConsultation() {
                     </div>
                     <div className="consultation-steps">
                         <div className="step active">
-                            <div className="step-number">1</div>
+                            <div className="step-number-c">1</div>
                             <span>Symptoms</span>
                         </div>
                         <div className="step-line"></div>
                         <div className="step">
-                            <div className="step-number">2</div>
+                            <div className="step-number-c">2</div>
                             <span>Details</span>
                         </div>
                         <div className="step-line"></div>
                         <div className="step">
-                            <div className="step-number">3</div>
+                            <div className="step-number-c">3</div>
                             <span>Review</span>
                         </div>
                         <div className="step-line"></div>
                         <div className="step">
-                            <div className="step-number">4</div>
+                            <div className="step-number-c">4</div>
                             <span>AI Analysis</span>
                         </div>
                     </div>

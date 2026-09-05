@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleDown, faAngleUp } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 import logout from "../../utils/logout.js";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, NavLink } from "react-router-dom";
 import useAuth from "../../context/useAuth.js";
 
 
@@ -23,15 +23,12 @@ function Navbar() {
       </div>
 
       <div className="nav-links">
-        <a href="#home" className="active">
-          Home
-        </a>
-
-        <a href="/how-it-works">How it works</a>
-        <a href="/safety">Safety</a>
-        <a href="/features">Features</a>
-        <a href="/faqs">FAQs</a>
-        <a href="#contact">Contact</a>
+        <NavLink to="/" className={({ isActive }) => isActive ? "active" : ""}>Home</NavLink>
+        <NavLink to="/how-it-works" className={({ isActive }) => isActive ? "active" : ""}>How it works</NavLink>
+        <NavLink to="/safety" className={({ isActive }) => isActive ? "active" : ""}>Safety</NavLink>
+        <NavLink to="/features" className={({ isActive }) => isActive ? "active" : ""}>Features</NavLink>
+        <NavLink to="/faqs" className={({ isActive }) => isActive ? "active" : ""}>FAQs</NavLink>
+        <NavLink to="/contact" className={({ isActive }) => isActive ? "active" : ""}>Contact</NavLink>
       </div>
       {isLoggedIn ? (
         <div className="user-profile">

@@ -280,7 +280,7 @@ body {
   left: 0 !important;
   right: auto !important;
 
-  top: 350px !important;
+  top: 430px !important;
   bottom: auto !important;
 
   width: 310px !important;
@@ -989,7 +989,7 @@ body {
   }
 
   .medical-art {
-    top: 350px !important;
+    top: 430px !important;
 
     width: 340px !important;
     height: 270px !important;
@@ -1426,7 +1426,7 @@ body {
     }
 
     .medical-art {
-        top: 350px !important;
+        top: 430px !important;
         width: 340px !important;
         height: 270px !important;
         transform: translateY(0) !important;

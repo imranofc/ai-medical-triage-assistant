@@ -1,6 +1,8 @@
 import "./Home.css";
+import { useNavigate } from "react-router-dom";
 
 function Home() {
+  const navigate = useNavigate();
   return (
     <div className="home">
 
@@ -34,12 +36,12 @@ function Home() {
             </p>
 
             <div className="hero-buttons">
-              <button className="primary-btn hero-btn">
+              <button className="primary-btn hero-btn" onClick={() => navigate("/new-consultation")}>
                 Start Assessment
                 <span>→</span>
               </button>
 
-              <button className="secondary-btn">
+              <button className="secondary-btn" onClick={() => navigate("/how-it-works")}>
                 <span className="play-icon">▶</span>
                 How it works
               </button>
@@ -99,7 +101,7 @@ function Home() {
                 </p>
               </div>
 
-              <button className="continue-btn">
+              <button className="continue-btn" onClick={() => navigate("/new-consultation")}>
                 Continue Assessment
                 <span>→</span>
               </button>

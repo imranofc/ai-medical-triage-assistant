@@ -22,16 +22,16 @@ function Footer() {
         <div className="footer-column">
           <h4>Product</h4>
 
-          <a href="/#how-it-works">How it works</a>
-          <a href="/#features">Features</a>
-          <a href="/#faqs">FAQs</a>
+          <a href="/how-it-works">How it works</a>
+          <a href="/features">Features</a>
+          <a href="/faqs">FAQs</a>
           <a href="/#">Pricing</a>
         </div>
 
         <div className="footer-column">
           <h4>Resources</h4>
 
-          <a href="/#safety">Safety Information</a>
+          <a href="/safety">Safety Information</a>
           <a href="/#">Blog</a>
           <a href="/#">Privacy Policy</a>
           <a href="/#">Terms of Service</a>
@@ -41,7 +41,7 @@ function Footer() {
           <h4>Company</h4>
 
           <a href="/#">About us</a>
-          <a href="/#contact">Contact us</a>
+          <a href="/contact">Contact us</a>
           <a href="/#">Careers</a>
         </div>
 
