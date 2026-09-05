@@ -1,10 +1,11 @@
-# MediAI --- AI-Powered Health Information & Triage Assistant
+# MediAI - AI-Powered Health Information & Triage Assistant
 
 MediAI is a full-stack web application that helps users structure their
 symptoms, provide relevant health information, highlight warning signs,
 and generate an AI-powered triage assessment.
 
 > **Live Demo:** https://mediai.imranofc.com
+> 
 > **Repository:**
 > https://github.com/imranofc/ai-medical-triage-assistant
 
