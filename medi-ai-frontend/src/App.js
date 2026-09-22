@@ -19,6 +19,8 @@ import Features from "./pages/InfoPages/Features";
 import FAQs from "./pages/InfoPages/FAQs";
 import { AuthProvider } from "./context/AuthContext";
 import ProfilePage from "./pages/ProfilePage/ProfilePage.jsx";
+import ForgotPassword from "./pages/Auth/ForgotPassword.jsx";
+import ResetPassword from "./pages/Auth/ResetPassword.jsx";
 
 
 
@@ -44,6 +46,8 @@ function App() {
         <Route path="/features" element={<Features />} />
         <Route path="/faqs" element={<FAQs />} />
         <Route path="/profile" element={<ProfilePage />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/reset-password/:uid/:token" element={<ResetPassword />} />
       </Routes>
       <Footer />
     </BrowserRouter>

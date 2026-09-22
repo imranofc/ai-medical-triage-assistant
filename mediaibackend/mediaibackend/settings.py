@@ -172,3 +172,8 @@ SIMPLE_JWT = {
     "ROTATE_REFRESH_TOKENS": True,      # New refresh token issued on reuse
     "BLACKLIST_AFTER_ROTATION": True,   # Old refresh token becomes invalid
 }
+
+# for email
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+DEFAULT_FROM_EMAIL = 'noreply@mediai.com'

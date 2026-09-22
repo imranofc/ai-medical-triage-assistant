@@ -1,4 +1,5 @@
 from django.contrib.gis import serializers
+from django.utils.encoding import force_bytes
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import status
@@ -10,6 +11,10 @@ from .serializers import UpdateProfileSerializer
 from io import BytesIO
 from reportlab.pdfgen import canvas
 from django.http import FileResponse
+from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
+from django.core.mail import send_mail
+from django.contrib.auth.tokens import default_token_generator
+
 
 from rest_framework.decorators import (
     authentication_classes,
@@ -20,7 +25,8 @@ from rest_framework.decorators import (
 from .models import (
     Consultation,
     PatientDetail,
-    Analysis
+    Analysis,
+    User,
 )
 
 from .serializers import (
@@ -29,6 +35,8 @@ from .serializers import (
     PatientDetailSerializer,
     AnalysisSerializer,
     FavouriteSerializer,
+    ForgotPasswordSerializer,
+    ResetPasswordSerializer,
 )
 
 from .ai.service import generate_analysis
@@ -1270,4 +1278,89 @@ def update_favourite(request):
     return Response(
         serializer.errors,
         status=status.HTTP_400_BAD_REQUEST
+    )
+
+@api_view(["POST"])
+def forgot_password(request):
+    serializer = ForgotPasswordSerializer(data=request.data)
+
+    if not serializer.is_valid():
+        return Response(
+            serializer.errors,
+            status=status.HTTP_400_BAD_REQUEST
+        )
+
+    email = serializer.validated_data["email"]
+
+    user = User.objects.filter(
+        email__iexact=email,
+        is_active=True
+    ).first()
+
+    if user:
+        uid = urlsafe_base64_encode(force_bytes(user.pk))
+        token = default_token_generator.make_token(user)
+
+        # Development URL
+        reset_url = (
+            f"http://localhost:3000/reset-password/{uid}/{token}/"
+        )
+
+        # Production URL
+        # reset_url = (
+        #     f"https://mediai.imranofc.com/reset-password/{uid}/{token}/"
+        # )
+
+        send_mail(
+            "MediAI - Reset Your Password",
+            f"Click the link below to reset your password:\n\n"
+            f"{reset_url}\n\n"
+            f"This link will expire when your password is changed.",
+            None,
+            [user.email],
+            fail_silently=False,
+        )
+
+    return Response(
+        {
+            "message": (
+                "If an account exists with this email, "
+                "a password reset link has been sent."
+            )
+        },
+        status=status.HTTP_200_OK
+    )
+
+@api_view(["POST"])
+def reset_password(request, uidb64, token):
+
+    try:
+        uid = urlsafe_base64_decode(uidb64).decode()
+        user = User.objects.get(pk=uid)
+
+    except (TypeError, ValueError, OverflowError, User.DoesNotExist):
+        user = None
+
+    if user is None or not default_token_generator.check_token(user, token):
+        return Response(
+            {"error": "Invalid or expired reset link."},
+            status=status.HTTP_400_BAD_REQUEST
+        )
+
+    serializer = ResetPasswordSerializer(data=request.data)
+
+    if not serializer.is_valid():
+        return Response(
+            serializer.errors,
+            status=status.HTTP_400_BAD_REQUEST
+        )
+
+    password = serializer.validated_data["new_password"]
+
+    user.set_password(password)
+    user.save()
+
+    return Response(
+        {"message": "Password reset successfully."},
+        status=status.HTTP_200_OK
     )

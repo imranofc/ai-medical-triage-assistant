@@ -18,4 +18,6 @@ urlpatterns = [
     path('api/update-profile/', update_profile, name="update_profile"),
     path("api/download-report/", download_report, name="download-report"),
     path("api/update-favourite/", update_favourite, name="update-favourite"),
+    path("api/forgot-password/", forgot_password, name="forgot-password"),
+    path("api/reset-password/<uidb64>/<token>/", reset_password, name="reset_password"),
 ]

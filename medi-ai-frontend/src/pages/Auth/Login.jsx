@@ -70,7 +70,7 @@ function Login() {
       localStorage.setItem("refresh_token", data.refresh);
 
       window.location.href = "/new-consultation/"
-      // navigate("/dashboard");
+      
     } catch (error) {
       console.error("Login error:", error);
 
