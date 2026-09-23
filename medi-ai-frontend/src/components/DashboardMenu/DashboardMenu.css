@@ -20,7 +20,7 @@
     z-index: 1000;
 }
 
-.logo {
+.dash-menu-logo {
     display: flex;
     align-items: center;
     gap: 9px;
@@ -31,11 +31,11 @@
     color: #0f172a;
 }
 
-.logo > span > span {
+.dash-menu-logo > span > span {
     color: #2563eb;
 }
 
-.logo-icon {
+.dash-menu-logo-icon {
     width: 38px;
     height: 38px;
     display: flex;
@@ -196,7 +196,7 @@
         left: 221px;
     }
 
-    .dashboard-menu.open .logo {
+    .dashboard-menu.open .dash-menu-logo {
         padding-top: 58px;
     }
 
@@ -221,11 +221,11 @@
         left: -260px;
     }
 
-    .dashboard-menu.open .logo {
+    .dashboard-menu.open .dash-menu-logo {
         padding-top: 58px;
     }
 
-    .logo {
+    .dash-menu-logo {
         padding-left: 22px;
         padding-right: 22px;
     }

@@ -13,8 +13,8 @@ function DashboardMenu() {
                 <FontAwesomeIcon icon={menuOpen ? faXmark : faBars} />
             </button>
             <aside className={`dashboard-menu ${menuOpen ? "open" : ""}`}>
-                <div className="logo">
-                    <div className="logo-icon">✚</div>
+                <div className="dash-menu-logo">
+                    <div className="dash-menu-logo-icon">✚</div>
                     <span>
                         Medi<span>AI</span>
                     </span>
