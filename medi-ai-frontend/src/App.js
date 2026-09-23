@@ -21,6 +21,7 @@ import { AuthProvider } from "./context/AuthContext";
 import ProfilePage from "./pages/ProfilePage/ProfilePage.jsx";
 import ForgotPassword from "./pages/Auth/ForgotPassword.jsx";
 import ResetPassword from "./pages/Auth/ResetPassword.jsx";
+import DashboardMenu from "./components/DashboardMenu/DashboardMenu.jsx";
 
 
 
@@ -28,26 +29,30 @@ function App() {
   return (
     <AuthProvider>
     <BrowserRouter>
-      <Navbar />
       <Routes>
+        <Route element={<Navbar />}>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/new-consultation" element={<NewConsultation />} />
+        <Route path="/how-it-works" element={<HowItWorks />} />
+        <Route path="/safety" element={<Safety />} />
+        <Route path="/features" element={<Features />} />
+        <Route path="/faqs" element={<FAQs />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/reset-password/:uid/:token" element={<ResetPassword />} />
+        </Route>
+
+        <Route element={<DashboardMenu />}>
+        <Route path="/history" element={<History />} />
         <Route path="/new-consultation/details" element={<Details />} />
         <Route path="/new-consultation/review" element={<Review />} />
         <Route path="/new-consultation/analysis" element={<AIAnalysis />} />
         <Route path="/new-consultation/analysis/details" element={<AnalysisDetails />} />
         <Route path="/new-consultation/analysis/warnings" element={<WarningDetails />} />
         <Route path="/new-consultation/analysis/self-care" element={<SelfCareDetails />} />
-        <Route path="/history" element={<History />} />
-        <Route path="/how-it-works" element={<HowItWorks />} />
-        <Route path="/safety" element={<Safety />} />
-        <Route path="/features" element={<Features />} />
-        <Route path="/faqs" element={<FAQs />} />
         <Route path="/profile" element={<ProfilePage />} />
-        <Route path="/forgot-password" element={<ForgotPassword />} />
-        <Route path="/reset-password/:uid/:token" element={<ResetPassword />} />
+        <Route path="/new-consultation" element={<NewConsultation />} />
+        </Route>
       </Routes>
       <Footer />
     </BrowserRouter>

@@ -1,7 +1,6 @@
 import "./History.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-    faArrowLeftLong,
     faClipboard,
     faCircleCheck,
     faFileLines,
@@ -241,10 +240,6 @@ function History() {
                     <div className="history-header">
                         <div className="history-title">
                             <h2>
-                                <FontAwesomeIcon
-                                    icon={faArrowLeftLong}
-                                    onClick={() => window.history.back()}
-                                />
                                 Your History
                             </h2>
 

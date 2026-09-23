@@ -5,8 +5,12 @@ import { faArrowLeftLong, faCalendarDays, faChevronDown, faShieldHalved } from "
 import { useEffect, useState } from "react";
 import Loader from "../../components/Loader/Loader";
 import API_URL from "../../config";
+import { useNavigate } from "react-router-dom";
+
 
 function Details() {
+    const navigate = useNavigate();
+
     const [age, setAge] = useState("");
     const [gender, setGender] = useState("");
     const [height, setHeight] = useState("");
@@ -143,7 +147,11 @@ function Details() {
                     <div className="details-header">
                         <div>
                             <h2>
-                                <FontAwesomeIcon icon={faArrowLeftLong} />
+                                <FontAwesomeIcon
+                                    icon={faArrowLeftLong}
+                                    onClick={() => navigate(-1)}
+                                    style={{ cursor: "pointer" }}
+                                />
                                 New Consultation
                             </h2>
                             <p>

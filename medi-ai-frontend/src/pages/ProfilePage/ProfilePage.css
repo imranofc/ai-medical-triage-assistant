@@ -7,7 +7,7 @@
 }
 
 .profile-container {
-    width: 86%;
+    width: 100%;
     max-width: 1220px;
     margin: 0 auto;
     padding: 55px 0 70px;
@@ -20,26 +20,6 @@
     align-items: center;
     gap: 22px;
     margin-bottom: 30px;
-}
-
-.profile-back {
-    width: 28px;
-    height: 28px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    color: #0f172a;
-    font-size: 22px;
-    cursor: pointer;
-
-    transition: all 0.2s ease;
-}
-
-.profile-back:hover {
-    color: #2563eb;
-    transform: translateX(-2px);
 }
 
 .profile-page-header h1 {
@@ -126,6 +106,10 @@
 
     color: #64748b;
     font-size: 15px;
+
+    overflow-wrap: anywhere;
+    word-break: break-word;
+    min-width: 0;
 }
 
 .profile-detail svg {
@@ -467,7 +451,7 @@
 
 @media (max-width: 1000px) {
     .profile-container {
-        width: 90%;
+        width: 95%;
     }
 
     .password-fields {

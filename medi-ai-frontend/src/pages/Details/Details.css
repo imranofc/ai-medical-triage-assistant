@@ -1,5 +1,5 @@
 .details-page {
-    width: 80%;
+    width: 100%;
     min-height: calc(100vh - 76px);
     background-color: #f8fafd;
     align-items: start;
@@ -251,12 +251,12 @@
     }
 
     .details-page{
-        width: 90%;
+        width: 100%;
     }
 }
 @media (max-width: 800px) {
     .details-page {
-        width: 95%;
+        width: 100%;
     }
     .form-row {
         flex-direction: column;

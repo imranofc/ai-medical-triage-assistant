@@ -1,5 +1,5 @@
 .analysis-page {
-    width: 80%;
+    width: 100%;
     min-height: calc(100vh - 76px);
     background-color: #f8fafd;
     display: grid;
@@ -461,7 +461,7 @@
     }
 
     .analysis-page {
-        width: 90%;
+        width: 100%;
     }
 }
 
@@ -605,6 +605,6 @@
 
 
         .analysis-page{
-        width: 95%;
+        width: 100%;
     }
 }

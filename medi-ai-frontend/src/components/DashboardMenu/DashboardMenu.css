@@ -1,0 +1,246 @@
+.dashboard {
+    display: flex;
+    min-height: 100vh;
+    background: #f8fafc;
+}
+
+.dashboard-menu {
+    position: sticky;
+    top: 0;
+    left: 0;
+    width: 270px;
+    height: 100vh;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    background: #f9fbfe;
+    border-right: 1px solid #e2e8f0;
+    padding: 28px 0;
+    box-sizing: border-box;
+    z-index: 1000;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 0 28px 28px;
+    border-bottom: 1px solid #e2e8f0;
+    font-size: 26px;
+    font-weight: 800;
+    color: #0f172a;
+}
+
+.logo > span > span {
+    color: #2563eb;
+}
+
+.logo-icon {
+    width: 38px;
+    height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #2563eb;
+    border: 3px solid #2563eb;
+    border-radius: 12px;
+    font-size: 21px;
+    font-weight: 800;
+}
+
+.dashboard-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 26px 14px;
+}
+
+.dashboard-nav a,
+.logout-btn {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    width: 100%;
+    padding: 14px 22px;
+    border: none;
+    border-radius: 11px;
+    background: transparent;
+    color: #172b4d;
+    font-size: 16px;
+    font-weight: 500;
+    text-decoration: none;
+    cursor: pointer;
+    text-align: left;
+    box-sizing: border-box;
+}
+
+.dashboard-nav a svg,
+.logout-btn svg {
+    width: 20px;
+    font-size: 20px;
+    flex-shrink: 0;
+}
+
+.dashboard-nav a:hover,
+.logout-btn:hover {
+    background: #edf4ff;
+    color: #2563eb;
+}
+
+.dashboard-nav a.active {
+    background: #e7f0ff;
+    color: #2563eb;
+    font-weight: 600;
+    border-left: 4px solid #2563eb;
+    padding-left: 18px;
+}
+
+.logout-btn {
+    margin-top: 10px;
+}
+
+.support-card {
+    margin: auto 14px 14px;
+    padding: 22px 20px;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    background: #f5f9ff;
+}
+
+.support-icon {
+    color: #2563eb;
+    font-size: 27px;
+    margin-bottom: 14px;
+}
+
+.support-card h3 {
+    margin: 0 0 6px;
+    color: #0f172a;
+    font-size: 17px;
+}
+
+.support-card p {
+    margin: 0 0 16px;
+    color: #64748b;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.support-card button {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #c9ddff;
+    border-radius: 9px;
+    background: #eaf2ff;
+    color: #2563eb;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.support-card button:hover {
+    background: #dceaff;
+}
+
+.dashboard-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.mobile-menu-btn {
+    display: none;
+}
+
+.menu-overlay {
+    display: none;
+}
+
+
+@media (max-width: 900px) {
+
+    .dashboard-menu {
+        position: fixed;
+        top: 0;
+        left: -280px;
+        width: 270px;
+        height: 100vh;
+        padding-top: 20px;
+        transition: left 0.25s ease;
+        box-shadow: 8px 0 25px rgba(15, 23, 42, 0.08);
+    }
+
+    .dashboard-menu.open {
+        left: 0;
+    }
+
+    .mobile-menu-btn {
+        position: fixed;
+        top: 18px;
+        left: 18px;
+        width: 44px;
+        height: 44px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid #dbe5f1;
+        border-radius: 10px;
+        background: #ffffff;
+        color: #0f172a;
+        font-size: 19px;
+        cursor: pointer;
+        z-index: 1100;
+        transition: left 0.25s ease;
+    }
+
+    .mobile-menu-btn.menu-open {
+        left: 221px;
+    }
+
+    .dashboard-menu.open .logo {
+        padding-top: 58px;
+    }
+
+    .menu-overlay {
+        position: fixed;
+        inset: 0;
+        display: block;
+        background: rgba(15, 23, 42, 0.35);
+        z-index: 900;
+    }
+
+    .dashboard-content {
+        width: 100%;
+    }
+}
+
+
+@media (max-width: 600px) {
+
+    .dashboard-menu {
+        width: 250px;
+        left: -260px;
+    }
+
+    .dashboard-menu.open .logo {
+        padding-top: 58px;
+    }
+
+    .logo {
+        padding-left: 22px;
+        padding-right: 22px;
+    }
+
+    .dashboard-nav {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    .support-card {
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+
+    .mobile-menu-btn.menu-open {
+        left: 201px;
+    }
+}

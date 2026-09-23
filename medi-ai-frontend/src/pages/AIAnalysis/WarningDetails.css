@@ -2,7 +2,7 @@
 */
 
 .warning-details-page {
-    width: 80%;
+    width: 100%;
     min-height: 100vh;
     background: #f8fafd;
     box-sizing: border-box;
@@ -663,7 +663,7 @@
     }
 
     .warning-details-page{
-        width: 90%;
+        width: 100%;
     }
 
     .warning-main-card {
@@ -707,7 +707,7 @@
     }
 
         .warning-details-page{
-        width: 95%;
+        width: 100%;
     }
 
 

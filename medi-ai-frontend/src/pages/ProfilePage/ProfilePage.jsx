@@ -1,7 +1,6 @@
 import "./ProfilePage.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-    faArrowLeft,
     faUser,
     faEnvelope,
     faCalendarDays,
@@ -175,10 +174,6 @@ function ProfilePage() {
             {isLoading && <Loader />}
             <main className="profile-container">
                 <div className="profile-page-header">
-                    <div className="profile-back" onClick={() => navigate(-1)}>
-                        <FontAwesomeIcon icon={faArrowLeft} />
-                    </div>
-
                     <div>
                         <h1>My Profile</h1>
                         <p>View and manage your account information.</p>
