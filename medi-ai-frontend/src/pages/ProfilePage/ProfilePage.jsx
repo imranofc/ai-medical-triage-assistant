@@ -173,13 +173,6 @@ function ProfilePage() {
         <div className="profile-page">
             {isLoading && <Loader />}
             <main className="profile-container">
-                <div className="profile-page-header">
-                    <div>
-                        <h1>My Profile</h1>
-                        <p>View and manage your account information.</p>
-                    </div>
-                </div>
-
                 <section className="profile-card profile-overview">
                     <div className="profile-avatar">
                         {fullName.charAt(0).toUpperCase()}
