@@ -22,15 +22,24 @@ import ProfilePage from "./pages/ProfilePage/ProfilePage.jsx";
 import ForgotPassword from "./pages/Auth/ForgotPassword.jsx";
 import ResetPassword from "./pages/Auth/ResetPassword.jsx";
 import DashboardMenu from "./components/DashboardMenu/DashboardMenu.jsx";
+import { Outlet } from "react-router-dom";
 
-
+function PublicLayout(){
+  return (
+    <>
+    <Navbar/>
+    <Outlet/>
+    <Footer/>
+    </>
+  )
+}
 
 function App() {
   return (
     <AuthProvider>
     <BrowserRouter>
       <Routes>
-        <Route element={<Navbar />}>
+        <Route element={<PublicLayout />}>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
@@ -54,7 +63,6 @@ function App() {
         <Route path="/new-consultation" element={<NewConsultation />} />
         </Route>
       </Routes>
-      <Footer />
     </BrowserRouter>
     </AuthProvider>
   );

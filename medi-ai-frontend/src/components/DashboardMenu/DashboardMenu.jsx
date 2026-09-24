@@ -1,8 +1,9 @@
 import "./DashboardMenu.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFileMedical, faClock, faStar, faUser, faGear, faRightFromBracket, faHeadset, faBars, faXmark } from "@fortawesome/free-solid-svg-icons";
+import { faFileMedical, faClock, faStar, faUser, faRightFromBracket, faHeadset, faBars, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { NavLink, Outlet } from "react-router-dom";
 import { useState } from "react";
+import logout from "../../utils/logout";
 
 function DashboardMenu() {
     const [menuOpen, setMenuOpen] = useState(false);
@@ -36,11 +37,7 @@ function DashboardMenu() {
                         <FontAwesomeIcon icon={faUser} />
                         <span>Profile</span>
                     </NavLink>
-                    <NavLink to="/settings" onClick={() => setMenuOpen(false)}>
-                        <FontAwesomeIcon icon={faGear} />
-                        <span>Settings</span>
-                    </NavLink>
-                    <button className="logout-btn">
+                    <button className="logout-btn" onClick={logout}>
                         <FontAwesomeIcon icon={faRightFromBracket} />
                         <span>Logout</span>
                     </button>

@@ -5,7 +5,6 @@ import { useState } from "react";
 import logout from "../../utils/logout.js";
 import { useNavigate, NavLink } from "react-router-dom";
 import useAuth from "../../context/useAuth.js";
-import { Outlet } from "react-router-dom";
 
 
 function Navbar() {
@@ -14,7 +13,6 @@ function Navbar() {
   const { name, isLoggedIn } = useAuth();
   const [open, setOpen] = useState(false)
   return (
-    <>
       <nav className="navbar">
         <div className="logo">
           <div className="logo-icon">✚</div>
@@ -62,8 +60,6 @@ function Navbar() {
           </div>
         )}
       </nav>
-      <Outlet />
-    </>
   );
 }
 
